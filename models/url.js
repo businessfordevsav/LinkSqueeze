@@ -1,5 +1,6 @@
-
+const { count } = require("console");
 const mongoose = require("mongoose");
+const { platform } = require("os");
 
 const urlScheme = mongoose.Schema(
   {
@@ -21,7 +22,13 @@ const urlScheme = mongoose.Schema(
         ipAddress: {
           type: String,
         },
-        userAgent: {
+        platform: {
+          type: String,
+        },
+        browser: {
+          type: String,
+        },
+        country: {
           type: String,
         },
       },
