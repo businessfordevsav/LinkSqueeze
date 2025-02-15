@@ -14,7 +14,8 @@
     "geoip-lite": "^1.4.10",
     "mongoose": "^8.10.1",
     "nanoid": "^5.1.0",
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.9",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",

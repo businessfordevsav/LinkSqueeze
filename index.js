@@ -3,6 +3,8 @@ const urlRouter = require("./routes/url");
 const connection = require("./connection");
 const URL = require("./models/url");
 const useragent = require("express-useragent");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger.json");
 
 const { handleRedirect } = require("./controllers/url");
 
@@ -13,6 +15,7 @@ connection("mongodb://localhost:27017/url-shortener");
 
 app.use(express.json());
 app.use(useragent.express());
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use("/url", urlRouter);
 
