@@ -30,7 +30,7 @@ A simple and efficient URL shortener built with Node.js and Express.
    ```
 3. Start the development server:
    ```sh
-   npm run dev
+   npm start
    ```
    The server runs on `http://localhost:3000`.
 
