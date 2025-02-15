@@ -21,7 +21,7 @@ A simple and efficient URL shortener built with Node.js and Express.
 
 1. Clone the repository:
    ```sh
-   git clone [text](https://github.com/businessfordevsav/short-link.git)
+   git clone https://github.com/businessfordevsav/short-link.git
    cd short-link
    ```
 2. Install dependencies:
