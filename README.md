@@ -44,7 +44,7 @@ A simple and efficient URL shortener built with Node.js and Express.
 
 ```json
 {
-  "originalUrl": "https://example.com"
+  "redirectUrl": "https://example.com"
 }
 ```
 
@@ -55,7 +55,7 @@ A simple and efficient URL shortener built with Node.js and Express.
   "status": "success",
   "statusCode": 200,
   "body": {
-    "redirectUrl": "http://localhost:3000/BGiSZKlH"
+    "shortUrl": "http://localhost:3000/BGiSZKlH"
   }
 }
 ```
