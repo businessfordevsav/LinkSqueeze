@@ -1,0 +1,182 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Short Link API",
+    "version": "1.0.0",
+    "description": "API documentation for URL shortening service with analytics"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Local development server"
+    }
+  ],
+  "paths": {
+    "/url": {
+      "post": {
+        "summary": "Create short URL",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateShortUrlRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Short URL created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateShortUrlResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{shortId}": {
+      "get": {
+        "summary": "Redirect to original URL",
+        "parameters": [
+          {
+            "name": "shortId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "302": {
+            "description": "Redirect to original URL",
+            "headers": {
+              "Location": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/url/analytics": {
+      "get": {
+        "summary": "Get short URL analytics",
+        "parameters": [
+          {
+            "name": "shortId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Analytics data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnalyticsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateShortUrlRequest": {
+        "type": "object",
+        "properties": {
+          "originalUrl": {
+            "type": "string",
+            "example": "https://example.com/long-url"
+          }
+        }
+      },
+      "CreateShortUrlResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "statusCode": {
+            "type": "integer",
+            "example": 200
+          },
+          "body": {
+            "type": "object",
+            "properties": {
+              "shortUrl": {
+                "type": "string",
+                "example": "http://localhost:3000/BGiSZKlH"
+              }
+            }
+          }
+        }
+      },
+      "AnalyticsResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "body": {
+            "type": "object",
+            "properties": {
+              "visitHistory": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "ipAddress": {
+                      "type": "string",
+                      "example": "::1"
+                    },
+                    "platform": {
+                      "type": "string",
+                      "example": "Apple Mac"
+                    },
+                    "browser": {
+                      "type": "string",
+                      "example": "Chrome"
+                    },
+                    "country": {
+                      "type": "string",
+                      "example": "Unknown"
+                    },
+                    "_id": {
+                      "type": "string",
+                      "example": "67b0a0878534912e0011d723"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "example": "2025-02-15T14:11:19.595Z"
+                    }
+                  }
+                }
+              },
+              "totalVisits": {
+                "type": "integer",
+                "example": 1
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
