@@ -40,7 +40,7 @@
         }
       }
     },
-    "/{shortId}": {
+    "/url/{shortId}": {
       "get": {
         "summary": "Redirect to original URL",
         "operationId": "redirectToOriginalUrl",
@@ -107,7 +107,7 @@
               "Location": {
                 "schema": {
                   "type": "string",
-                  "example": "http://localhost:3000/webpage"
+                  "example": "http://localhost:3000/linksqueeze"
                 }
               }
             }
@@ -121,7 +121,7 @@
       "CreateShortUrlRequest": {
         "type": "object",
         "properties": {
-          "originalUrl": {
+          "redirectUrl": {
             "type": "string",
             "example": "https://example.com/long-url"
           }
@@ -143,7 +143,7 @@
             "properties": {
               "shortUrl": {
                 "type": "string",
-                "example": "http://localhost:3000/BGiSZKlH"
+                "example": "http://localhost:3000/url/BGiSZKlH"
               }
             }
           }
