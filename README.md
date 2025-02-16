@@ -141,7 +141,8 @@ A simple and efficient URL shortener built with Node.js and Express.
 
 Below is an example screenshot of the web interface:
 
-| ![Web Interface 1](/resource//screenshot-web-page-1.png) | ![Web Interface 2](/resource//screenshot-web-page-2.png) |
+![Web Interface 1](/resource//screenshot-web-page-1.png)
+![Web Interface 2](/resource//screenshot-web-page-2.png)
 
 ## 📌 Usage
 
