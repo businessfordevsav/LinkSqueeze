@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="LinkSqueeze URL shortener with detailed analytics"
+    />
+    <meta name="author" content="businessfordevsav" />
+    <title>LinkSqueeze</title>
+
+    <style>
+      :root {
+        --primary: #3b82f6;
+        --secondary: #2563eb;
+        --background: #f8fafc;
+        --text: #1e293b;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: var(--background);
+        color: var(--text);
+        line-height: 1.6;
+        padding: 2rem;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 2rem;
+        padding: 1.5rem 0;
+      }
+
+      .card {
+        background: white;
+        border-radius: 1rem;
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .form-group {
+        margin-bottom: 1rem;
+      }
+
+      input[type="url"],
+      input[type="text"] {
+        width: 100%;
+        padding: 0.8rem;
+        border: 2px solid #e2e8f0;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+      }
+
+      input:focus {
+        outline: none;
+        border-color: var(--primary);
+      }
+
+      button {
+        width: 100%;
+        background: var(--primary);
+        color: white;
+        padding: 0.8rem;
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background 0.3s ease;
+      }
+
+      button:hover {
+        background: var(--secondary);
+      }
+
+      .short-url-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1rem;
+      }
+
+      .short-url-input {
+        flex-grow: 1;
+        padding: 0.8rem;
+        border: 2px solid #e2e8f0;
+        border-radius: 0.5rem;
+        background: var(--background);
+        text-align: center;
+      }
+
+      .analytics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+        margin: 1.5rem 0;
+      }
+
+      .analytic-card {
+        background: white;
+        padding: 1rem;
+        border-radius: 0.8rem;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+
+      .table-container {
+        overflow-x: auto;
+      }
+
+      .click-history-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 0.8rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        min-width: 600px;
+      }
+
+      .click-history-table th,
+      .click-history-table td {
+        padding: 0.8rem;
+        text-align: left;
+        border-bottom: 1px solid #f1f5f9;
+        font-size: 0.9rem;
+      }
+
+      .click-history-table th {
+        background: var(--background);
+        font-weight: 600;
+      }
+
+      .toast {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: var(--primary);
+        color: white;
+        padding: 0.8rem;
+        border-radius: 0.5rem;
+        display: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .url-history {
+        margin-top: 2rem;
+      }
+
+      .url-card {
+        background: white;
+        padding: 1rem;
+        border-radius: 0.8rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+
+      @media (max-width: 768px) {
+        body {
+          padding: 1rem;
+        }
+
+        .header {
+          margin-bottom: 1.5rem;
+        }
+
+        .card {
+          padding: 1rem;
+        }
+
+        .short-url-container {
+          flex-direction: column;
+        }
+
+        button {
+          width: 100%;
+        }
+
+        .analytics-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+
+    <style>
+      :root {
+        --primary: #3b82f6;
+        --secondary: #2563eb;
+        --background: #f8fafc;
+        --text: #1e293b;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+        background: var(--background);
+        color: var(--text);
+        line-height: 1.6;
+        padding: 2rem;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding: 2rem 0;
+      }
+
+      .card {
+        background: white;
+        border-radius: 1rem;
+        padding: 2rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      input[type="url"],
+      input[type="text"] {
+        width: 100%;
+        padding: 1rem;
+        border: 2px solid #e2e8f0;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+      }
+
+      input:focus {
+        outline: none;
+        border-color: var(--primary);
+      }
+
+      button {
+        background: var(--primary);
+        color: white;
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        font-weight: 600;
+        transition: var(--background) 0.3s ease;
+      }
+
+      button:hover {
+        background: var(--secondary);
+      }
+
+      .result-section {
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid #e2e8f0;
+      }
+
+      .short-url-container {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .short-url-input {
+        flex-grow: 1;
+        padding: 1rem;
+        border: 2px solid #e2e8f0;
+        border-radius: 0.5rem;
+        background: var(--background);
+      }
+
+      .analytics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin: 2rem 0;
+      }
+
+      .analytic-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 0.8rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+
+      .click-history-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 0.8rem;
+        overflow: hidden;
+        margin: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+
+      .click-history-table th,
+      .click-history-table td {
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 1px solid #f1f5f9;
+      }
+
+      .click-history-table th {
+        background: var(--background);
+        font-weight: 600;
+      }
+
+      .history-item td {
+        vertical-align: middle;
+      }
+
+      .device-icon {
+        font-size: 1.2rem;
+        margin-right: 0.5rem;
+      }
+
+      .toast {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: var(--primary);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 0.5rem;
+        display: none;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+
+      .url-history {
+        margin-top: 3rem;
+      }
+
+      .url-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 0.8rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+
+      @media (max-width: 768px) {
+        body {
+          padding: 1rem;
+        }
+
+        .header {
+          margin-bottom: 2rem;
+        }
+
+        .card {
+          padding: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <h1>🔗 LinkSqueeze URL Shortener</h1>
+        <p>Create short links with detailed analytics</p>
+      </header>
+
+      <main class="card">
+        <form action="/shorten" method="POST" id="shortenForm">
+          <div class="form-group">
+            <input
+              type="url"
+              name="originalUrl"
+              placeholder="https://example.com/long-url"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="text"
+              name="customName"
+              placeholder="Custom name (optional)"
+              maxlength="50"
+            />
+          </div>
+          <button type="submit">Shorten URL</button>
+        </form>
+      </main>
+
+      <% if (typeof urls !== 'undefined' && urls.length > 0) { %>
+      <section class="url-history">
+        <h2>📚 Your Recent Shortened URLs</h2>
+        <% urls.forEach(url => { %> <% if (typeof url.shortId !== 'undefined') {
+        %>
+        <div class="url-card">
+          <div class="url-header">
+            <h3><%= url.name || 'Untitled Link' %></h3>
+            <small>
+              Created: <%= url.createdAt.toLocaleDateString() %> <% if
+              (url.expiresAt) { %> | Expires: <%=
+              url.expiresAt.toLocaleDateString() %> <% } %>
+            </small>
+          </div>
+          <div class="short-url-container">
+            <input
+              type="text"
+              value="http://localhost:3000/url/<%= url.shortId %>"
+              readonly
+              class="short-url-input"
+              id="shortUrlInput"
+            />
+            <button onclick="copyToClipboard()">Copy</button>
+          </div>
+
+          <div class="analytics-grid">
+            <div class="analytic-card">
+              <h3>🖱️ Total Clicks</h3>
+              <p class="stat"><%= url.visitHistory.length %></p>
+            </div>
+            <div class="analytic-card">
+              <h3>🌍 Countries</h3>
+              <p class="stat">
+                <%= [...new Set(url.visitHistory.map(v => v.country))].length %>
+              </p>
+            </div>
+            <div class="analytic-card">
+              <h3>📱 Devices</h3>
+              <p class="stat">
+                <%= [...new Set(url.visitHistory.map(v => v.deviceType))].length
+                %>
+              </p>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <h3>📅 Click History</h3>
+            <table class="click-history-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Location</th>
+                  <th>Device</th>
+                  <th>Platform</th>
+                  <th>Browser</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% url.formattedHistory.forEach(visit => { %>
+                <tr>
+                  <td><%= visit.formattedDate %></td>
+                  <td><%= visit.country || 'Unknown' %></td>
+                  <td>
+                    <span class="device-icon">
+                      <%= visit.deviceType === 'Mobile' ? '📱' : '💻' %>
+                    </span>
+                    <%= visit.deviceType || 'Desktop' %>
+                  </td>
+                  <td>
+                    <span class="platform-icon"><%= visit.platformIcon %></span>
+                    <%= visit.platform || 'Unknown' %>
+                  </td>
+                  <td>
+                    <span class="browser-icon"><%= visit.browserIcon %></span>
+                    <%= visit.browser || 'Unknown' %>
+                  </td>
+                </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <% } %> <% }) %>
+      </section>
+      <% } %>
+
+      <div class="toast" id="toast">Copied to clipboard!</div>
+    </div>
+
+    <script>
+      function copyToClipboard() {
+        const input = document.getElementById("shortUrlInput");
+        input.select();
+
+        navigator.clipboard
+          .writeText(input.value)
+          .then(() => showToast("URL copied to clipboard!"))
+          .catch((err) => console.error("Copy failed:", err));
+      }
+
+      function showToast(message) {
+        const toast = document.getElementById("toast");
+        toast.textContent = message;
+        toast.style.display = "block";
+        setTimeout(() => {
+          toast.style.display = "none";
+        }, 3000);
+      }
+
+      // Form submission handler
+      document
+        .getElementById("shortenForm")
+        .addEventListener("submit", function (e) {
+          const button = e.target.querySelector('button[type="submit"]');
+          button.disabled = true;
+          button.innerHTML = "⏳ Shortening...";
+        });
+    </script>
+  </body>
+</html>

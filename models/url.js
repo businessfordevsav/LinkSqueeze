@@ -1,42 +1,95 @@
-const { count } = require("console");
 const mongoose = require("mongoose");
-const { platform } = require("os");
+const validator = require("validator");
 
-const urlScheme = mongoose.Schema(
+const urlSchema = new mongoose.Schema(
   {
     shortId: {
       type: String,
       required: true,
       unique: true,
+      index: true,
     },
     redirectUrl: {
       type: String,
-      required: true,
+      required: [true, "Please provide a valid URL"],
+      validate: {
+        validator: (value) =>
+          validator.isURL(value, {
+            protocols: ["http", "https"],
+            require_protocol: true,
+          }),
+        message: "Invalid URL format",
+      },
     },
-    visitiHistory: [
+    name: {
+      type: String,
+      maxlength: [50, "Name cannot be longer than 50 characters"],
+    },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+    clicks: {
+      type: Number,
+      default: 0,
+    },
+    visitHistory: [
       {
         timestamp: {
           type: Date,
           default: Date.now,
         },
-        ipAddress: {
-          type: String,
-        },
-        platform: {
-          type: String,
-        },
-        browser: {
-          type: String,
-        },
-        country: {
-          type: String,
-        },
+        ipAddress: String,
+        platform: String,
+        browser: String,
+        country: String,
+        referrer: String,
+        deviceType: String,
       },
     ],
+    expiresAt: {
+      type: Date,
+      default: () => new Date(+new Date() + 30 * 24 * 60 * 60 * 1000),
+    },
   },
-  { timestamp: true }
+  {
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  }
 );
 
-const URL = mongoose.model("UrlShortener", urlScheme);
+// Virtual for formatted history
+urlSchema.virtual("formattedHistory").get(function () {
+  return this.visitHistory.map((visit) => ({
+    ...visit.toObject(),
+    formattedDate: visit.timestamp.toLocaleString(),
+    platformIcon: this.constructor.getPlatformIcon(visit.platform), // Use this.constructor
+    browserIcon: this.constructor.getBrowserIcon(visit.browser), // Use this.constructor
+  }));
+});
 
-module.exports = URL;
+// Static methods for icons
+urlSchema.statics.getPlatformIcon = function (platform) {
+  const platforms = {
+    Windows: "💻",
+    MacOS: "🍎",
+    Linux: "🐧",
+    iOS: "📱",
+    Android: "🤖",
+  };
+  return platforms[platform] || "❓";
+};
+
+urlSchema.statics.getBrowserIcon = function (browser) {
+  const browsers = {
+    Chrome: "🌐",
+    Firefox: "🦊",
+    Safari: "🌍",
+    Edge: "🌊",
+    Opera: "🔴",
+  };
+  return browsers[browser] || "❓";
+};
+
+module.exports = mongoose.model("SHORT-URL", urlSchema);
