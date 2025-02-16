@@ -26,6 +26,7 @@ async function connectDB() {
 connectDB();
 
 app.use(express.json());
+app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 app.use(express.urlencoded({ extended: true })); // Ensure form data is parsed
 app.use(useragent.express());
 app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
@@ -41,7 +42,7 @@ function generateShortId() {
   return crypto.randomBytes(4).toString("hex");
 }
 
-app.get("/shorten", async (req, res) => {
+app.get("/linksqueeze", async (req, res) => {
   try {
     const urls = await URL.find().sort({ createdAt: -1 }).limit(10);
     res.render("index", { urls });
@@ -50,7 +51,7 @@ app.get("/shorten", async (req, res) => {
   }
 });
 
-app.post("/shorten", async (req, res) => {
+app.post("/linksqueeze", async (req, res) => {
   try {
     const { originalUrl, customName } = req.body;
     if (!originalUrl) throw new Error("Original URL is required");
