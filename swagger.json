@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Short Link API",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "API documentation for URL shortening service with analytics"
   },
   "servers": [
@@ -15,6 +15,7 @@
     "/url": {
       "post": {
         "summary": "Create short URL",
+        "operationId": "createShortUrl",
         "requestBody": {
           "required": true,
           "content": {
@@ -27,7 +28,7 @@
         },
         "responses": {
           "200": {
-            "description": "Short URL created",
+            "description": "Short URL created successfully",
             "content": {
               "application/json": {
                 "schema": {
@@ -42,6 +43,7 @@
     "/{shortId}": {
       "get": {
         "summary": "Redirect to original URL",
+        "operationId": "redirectToOriginalUrl",
         "parameters": [
           {
             "name": "shortId",
@@ -54,7 +56,7 @@
         ],
         "responses": {
           "302": {
-            "description": "Redirect to original URL",
+            "description": "Redirects to the original URL",
             "headers": {
               "Location": {
                 "schema": {
@@ -68,7 +70,8 @@
     },
     "/url/analytics": {
       "get": {
-        "summary": "Get short URL analytics",
+        "summary": "Retrieve short URL analytics",
+        "operationId": "getShortUrlAnalytics",
         "parameters": [
           {
             "name": "shortId",
@@ -81,11 +84,30 @@
         ],
         "responses": {
           "200": {
-            "description": "Analytics data",
+            "description": "Returns analytics data for the short URL",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/AnalyticsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/linksqueeze": {
+      "get": {
+        "summary": "Redirect to web page",
+        "operationId": "redirectToWebPage",
+        "responses": {
+          "302": {
+            "description": "Redirects to the web interface",
+            "headers": {
+              "Location": {
+                "schema": {
+                  "type": "string",
+                  "example": "http://localhost:3000/webpage"
                 }
               }
             }
