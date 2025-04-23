@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",
@@ -16,13 +17,13 @@
     "geoip-lite": "^1.4.10",
     "mongoose": "^8.10.1",
     "nanoid": "^5.1.0",
-    "nodemon": "^3.1.9",
     "serve-favicon": "^2.5.0",
     "swagger-ui-express": "^5.0.1",
     "validator": "^13.12.0"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
-    "@types/express-useragent": "^1.0.5"
+    "@types/express-useragent": "^1.0.5",
+    "nodemon": "^3.1.9"
   }
 }
