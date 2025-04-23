@@ -66,6 +66,86 @@
             }
           }
         }
+      },
+      "patch": {
+        "summary": "Update short URL properties",
+        "operationId": "updateShortUrl",
+        "parameters": [
+          {
+            "name": "shortId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateShortUrlRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Short URL updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateShortUrlResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/url/{shortId}/status": {
+      "patch": {
+        "summary": "Enable or disable a short URL",
+        "operationId": "toggleUrlStatus",
+        "parameters": [
+          {
+            "name": "shortId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "isActive": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "URL status updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ToggleUrlStatusResponse"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/url/analytics": {
@@ -124,6 +204,48 @@
           "redirectUrl": {
             "type": "string",
             "example": "https://example.com/long-url"
+          },
+          "name": {
+            "type": "string",
+            "example": "My Example Link"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-12-31T23:59:59Z"
+          },
+          "customOverlay": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": "boolean",
+                "example": true
+              },
+              "text": {
+                "type": "string",
+                "example": "Check out our special offer!"
+              },
+              "buttonText": {
+                "type": "string",
+                "example": "Get Special Offer"
+              },
+              "buttonUrl": {
+                "type": "string",
+                "example": "https://example.com/special-offer"
+              },
+              "backgroundColor": {
+                "type": "string",
+                "example": "rgba(0, 0, 0, 0.8)"
+              },
+              "textColor": {
+                "type": "string",
+                "example": "#ffffff"
+              },
+              "buttonColor": {
+                "type": "string",
+                "example": "#ff5722"
+              }
+            }
           }
         }
       },
@@ -144,6 +266,157 @@
               "shortUrl": {
                 "type": "string",
                 "example": "http://localhost:3000/url/BGiSZKlH"
+              },
+              "qrCodeUrl": {
+                "type": "string",
+                "example": "http://localhost:3000/qrcodes/BGiSZKlH.png"
+              },
+              "details": {
+                "type": "object",
+                "properties": {
+                  "shortId": {
+                    "type": "string",
+                    "example": "BGiSZKlH"
+                  },
+                  "redirectUrl": {
+                    "type": "string",
+                    "example": "https://example.com/long-url"
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "My Example Link"
+                  },
+                  "clicks": {
+                    "type": "integer",
+                    "example": 0
+                  },
+                  "qrCodeUrl": {
+                    "type": "string",
+                    "example": "/qrcodes/BGiSZKlH.png"
+                  },
+                  "isActive": {
+                    "type": "boolean",
+                    "example": true
+                  },
+                  "expiresAt": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2023-12-31T23:59:59Z"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "UpdateShortUrlRequest": {
+        "type": "object",
+        "properties": {
+          "redirectUrl": {
+            "type": "string",
+            "example": "https://example.com/updated-url"
+          },
+          "name": {
+            "type": "string",
+            "example": "Updated Link Name"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-12-31T23:59:59Z"
+          },
+          "customOverlay": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": "boolean",
+                "example": true
+              },
+              "text": {
+                "type": "string",
+                "example": "Updated overlay text"
+              },
+              "buttonText": {
+                "type": "string",
+                "example": "Updated Button"
+              },
+              "buttonUrl": {
+                "type": "string",
+                "example": "https://example.com/updated-offer"
+              }
+            }
+          }
+        }
+      },
+      "UpdateShortUrlResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "statusCode": {
+            "type": "integer",
+            "example": 200
+          },
+          "body": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "URL updated successfully"
+              },
+              "url": {
+                "type": "object",
+                "properties": {
+                  "shortId": {
+                    "type": "string",
+                    "example": "BGiSZKlH"
+                  },
+                  "redirectUrl": {
+                    "type": "string",
+                    "example": "https://example.com/updated-url"
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "Updated Link Name"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "ToggleUrlStatusResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "statusCode": {
+            "type": "integer",
+            "example": 200
+          },
+          "body": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "URL enabled"
+              },
+              "url": {
+                "type": "object",
+                "properties": {
+                  "shortId": {
+                    "type": "string",
+                    "example": "BGiSZKlH"
+                  },
+                  "isActive": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
               }
             }
           }
@@ -179,6 +452,14 @@
                     "country": {
                       "type": "string",
                       "example": "Unknown"
+                    },
+                    "deviceType": {
+                      "type": "string",
+                      "example": "Desktop"
+                    },
+                    "referrer": {
+                      "type": "string",
+                      "example": "Direct"
                     },
                     "_id": {
                       "type": "string",

@@ -11,6 +11,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@mui/icons-material": "^7.0.2",
+    "@mui/material": "^7.0.2",
     "dotenv": "^16.5.0",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
@@ -18,7 +20,10 @@
     "geoip-lite": "^1.4.10",
     "mongoose": "^8.10.1",
     "nanoid": "^5.1.0",
+    "qrcode": "^1.5.4",
+    "qrcode.react": "^4.2.0",
     "serve-favicon": "^2.5.0",
+    "sharp": "^0.33.5",
     "swagger-ui-express": "^5.0.1",
     "validator": "^13.12.0"
   },

@@ -51,6 +51,40 @@ const urlSchema = new mongoose.Schema(
       type: Date,
       default: () => new Date(+new Date() + 30 * 24 * 60 * 60 * 1000),
     },
+    qrCodeUrl: {
+      type: String,
+      default: null,
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
+    // Add adModeEnabled field to track QR codes with app icon
+    adModeEnabled: {
+      type: Boolean,
+      default: false,
+    },
+    customOverlay: {
+      enabled: {
+        type: Boolean,
+        default: false,
+      },
+      text: String,
+      buttonText: String,
+      buttonUrl: String,
+      backgroundColor: {
+        type: String,
+        default: "rgba(0, 0, 0, 0.7)",
+      },
+      textColor: {
+        type: String,
+        default: "#ffffff",
+      },
+      buttonColor: {
+        type: String,
+        default: "#3498db",
+      },
+    },
   },
   {
     timestamps: true,

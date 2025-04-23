@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Error - LinkSqueeze</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div
+        class="error-container"
+        style="max-width: 600px; margin: 4rem auto; text-align: center"
+      >
+        <div class="card">
+          <div class="card-body">
+            <div
+              style="font-size: 4rem; color: var(--danger); margin-bottom: 1rem"
+            >
+              <i class="fas fa-exclamation-circle"></i>
+            </div>
+
+            <h1
+              style="margin-bottom: 1rem; font-size: 2rem; color: var(--text)"
+            >
+              <%= error.status %> - <%= error.message %>
+            </h1>
+
+            <% if (error.details) { %>
+            <p style="margin-bottom: 2rem; color: var(--text-light)">
+              <%= error.details %>
+            </p>
+            <% } %>
+
+            <div style="margin-top: 2rem">
+              <a href="/linksqueeze" class="btn btn-primary">
+                <i class="fas fa-home"></i> Return to Home
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div
+          style="
+            margin-top: 2rem;
+            font-size: 0.875rem;
+            color: var(--text-light);
+          "
+        >
+          <!-- <p>
+            &copy; <%= new Date().getFullYear() %> LinkSqueeze. All rights
+            reserved.
+          </p> -->
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Initialize theme
+      (function () {
+        const savedTheme = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+
+        if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      })();
+    </script>
+    
+  </body>
+</html>
