@@ -383,7 +383,7 @@
       </header>
 
       <main class="card">
-        <form action="/shorten" method="POST" id="shortenForm">
+        <form action="/linksqueeze" method="POST" id="shortenForm">
           <div class="form-group">
             <input
               type="url"
@@ -421,12 +421,19 @@
           <div class="short-url-container">
             <input
               type="text"
-              value="http://localhost:3000/url/<%= url.shortId %>"
+              value="<%= baseUrl %>/url/<%= url.shortId %>"
               readonly
               class="short-url-input"
-              id="shortUrlInput"
+              id="shortUrlInput-<%= url.shortId %>"
             />
-            <button onclick="copyToClipboard()">Copy</button>
+            <button
+              onclick="copyToClipboard('shortUrlInput-<%= url.shortId %>')"
+            >
+              Copy
+            </button>
+            <button onclick="openToURL('shortUrlInput-<%= url.shortId %>')">
+              Open
+            </button>
           </div>
 
           <div class="analytics-grid">
@@ -481,7 +488,11 @@
                     <%= visit.browser || 'Unknown' %>
                   </td>
                 </tr>
-                <% }) %>
+                <% }) %> <% if (url.formattedHistory.length === 0) { %>
+                <tr>
+                  <td colspan="5" style="text-align: center">No clicks yet.</td>
+                </tr>
+                <% } %>
               </tbody>
             </table>
           </div>
@@ -494,14 +505,32 @@
     </div>
 
     <script>
-      function copyToClipboard() {
-        const input = document.getElementById("shortUrlInput");
+      function copyToClipboard(inputId) {
+        // Accept inputId as argument
+        const input = document.getElementById(inputId); // Use the specific ID
         input.select();
+        input.setSelectionRange(0, 99999); // For mobile devices
 
         navigator.clipboard
           .writeText(input.value)
           .then(() => showToast("URL copied to clipboard!"))
-          .catch((err) => console.error("Copy failed:", err));
+          .catch((err) => {
+            console.error("Copy failed:", err);
+            // Fallback for older browsers or insecure contexts
+            try {
+              document.execCommand("copy");
+              showToast("URL copied to clipboard!");
+            } catch (execErr) {
+              console.error("Fallback copy failed:", execErr);
+              showToast("Copy failed. Please copy manually.");
+            }
+          });
+      }
+
+      function openToURL(inputId) {
+        // Accept inputId as argument
+        const input = document.getElementById(inputId); // Use the specific ID
+        window.open(input.value, "_blank");
       }
 
       function showToast(message) {
