@@ -1,23 +1,31 @@
-require("dotenv").config(); // Load environment variables from .env file
-const express = require("express");
-const urlRouter = require("./routes/url");
-const connection = require("./connection");
-const URL = require("./models/url");
-const useragent = require("express-useragent");
-const swaggerUi = require("swagger-ui-express");
-const swaggerDocument = require("./swagger.json");
-const path = require("path");
-const mongoose = require("mongoose");
-const crypto = require("crypto");
+import dotenv from "dotenv";
+import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
+import mongoose from "mongoose";
+import crypto from "crypto";
+import favicon from "serve-favicon";
+import useragent from "express-useragent";
+import swaggerUi from "swagger-ui-express";
 
-var favicon = require("serve-favicon");
+import urlRouter from "./routes/url.js";
+import connection from "../connection.js";
+import URL from "./models/url.js";
+import swaggerDocument from "../swagger.json" with { type: "json" };
+
+// ES modules fix for __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Load environment variables
+dotenv.config();
 
 const app = express();
 // Use environment variable for PORT, fallback to 3000
 const PORT = process.env.PORT || 3000;
 
 // Database Connection
-async function connectDB() {
+const connectDB = async () => {
   // Use environment variable for MongoDB URI, fallback to local for development
   const mongoURI =
     process.env.MONGODB_URI || "mongodb://localhost:27017/url-shortener";
@@ -29,31 +37,28 @@ async function connectDB() {
     // Consider exiting the process if the database connection fails on startup
     // process.exit(1);
   }
-}
+};
 connectDB();
 
 app.use(express.json());
-app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
+app.use(favicon(path.join(__dirname, "..", "public", "favicon.ico")));
 app.use(express.urlencoded({ extended: true })); // Ensure form data is parsed
 app.use(useragent.express());
-app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 
 app.set("view engine", "ejs");
-app.set("views", path.resolve("./views"));
+app.set("views", path.join(__dirname,"./views"));
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use("/url", urlRouter);
 
-function generateShortId() {
-  return crypto.randomBytes(4).toString("hex");
-}
+const generateShortId = () => crypto.randomBytes(4).toString("hex");
 
 app.get("/linksqueeze", async (req, res) => {
   try {
     const urls = await URL.find().sort({ createdAt: -1 }).limit(10);
-    const baseUrl = `${req.protocol}://${req.get("host")}`; // Define baseUrl
-    res.render("index", { urls, baseUrl }); // Pass baseUrl to the template
+    const baseUrl = `${req.protocol}://${req.get("host")}`;
+    res.render("index", { urls, baseUrl });
   } catch (error) {
     res.status(500).send("Error fetching URLs");
   }
@@ -78,8 +83,8 @@ app.post("/linksqueeze", async (req, res) => {
     res.redirect("/linksqueeze");
   } catch (error) {
     const urls = await URL.find().sort({ createdAt: -1 }).limit(10);
-    const baseUrl = `${req.protocol}://${req.get("host")}`; // Define baseUrl
-    res.status(400).render("index", { error: error.message, urls, baseUrl }); // Pass baseUrl to the template
+    const baseUrl = `${req.protocol}://${req.get("host")}`;
+    res.status(400).render("index", { error: error.message, urls, baseUrl });
   }
 });
 

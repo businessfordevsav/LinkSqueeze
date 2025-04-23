@@ -1,9 +1,9 @@
-const express = require("express");
-const {
+import express from "express";
+import {
   handleGenerateURL,
   handleAnalytics,
   handleRedirect,
-} = require("../controllers/url");
+} from "../controllers/url.js";
 
 const router = express.Router();
 
@@ -11,4 +11,4 @@ router.post("/", handleGenerateURL);
 router.get("/:shortId", handleRedirect);
 router.get("/analytics", handleAnalytics);
 
-module.exports = router;
+export default router;

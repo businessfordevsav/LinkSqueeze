@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const validator = require("validator");
+import mongoose from "mongoose";
+import validator from "validator";
 
 const urlSchema = new mongoose.Schema(
   {
@@ -64,8 +64,8 @@ urlSchema.virtual("formattedHistory").get(function () {
   return this.visitHistory.map((visit) => ({
     ...visit.toObject(),
     formattedDate: visit.timestamp.toLocaleString(),
-    platformIcon: this.constructor.getPlatformIcon(visit.platform), // Use this.constructor
-    browserIcon: this.constructor.getBrowserIcon(visit.browser), // Use this.constructor
+    platformIcon: this.constructor.getPlatformIcon(visit.platform),
+    browserIcon: this.constructor.getBrowserIcon(visit.browser),
   }));
 });
 
@@ -92,4 +92,6 @@ urlSchema.statics.getBrowserIcon = function (browser) {
   return browsers[browser] || "❓";
 };
 
-module.exports = mongoose.model("SHORT-URL", urlSchema);
+const URL = mongoose.model("SHORT-URL", urlSchema);
+
+export default URL;
