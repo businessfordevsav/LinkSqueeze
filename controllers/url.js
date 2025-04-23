@@ -1,4 +1,3 @@
-const { nanoid } = require("nanoid");
 const URL = require("../models/url");
 const { status } = require("express/lib/response");
 const geoip = require("geoip-lite");
@@ -6,6 +5,8 @@ const e = require("express");
 
 async function handleGenerateURL(req, res) {
   try {
+    // Dynamically import nanoid
+    const { nanoid } = await import("nanoid");
     const body = req.body;
     if (!body.redirectUrl)
       return res.status(400).json({
