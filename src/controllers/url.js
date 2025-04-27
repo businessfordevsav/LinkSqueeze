@@ -6,7 +6,7 @@ import {
   generateQRCode,
   deleteQRCode,
   generateAdModeQRCode,
-  getProxiedUrl
+  getProxiedUrl,
 } from "../services/qrCodeService.js";
 
 // Updated handleGenerateURL function with better error logging
@@ -209,15 +209,15 @@ const handleRegenerateQRCode = async (req, res) => {
     await url.save();
 
     // Ensure the QR code URL is properly proxied in the response
-    let responseQrCodeUrl = qrCodeUrl; 
-    
+    let responseQrCodeUrl = qrCodeUrl;
+
     // If it's a full URL (like from S3), convert it to a proxied URL
-    if (qrCodeUrl.startsWith('http')) {
+    if (qrCodeUrl.startsWith("http")) {
       responseQrCodeUrl = getProxiedUrl(qrCodeUrl);
     }
-    
+
     // Make the URL absolute (prepend the host)
-    const absoluteQrCodeUrl = responseQrCodeUrl.startsWith('/')
+    const absoluteQrCodeUrl = responseQrCodeUrl.startsWith("/")
       ? `${req.protocol}://${req.get("host")}${responseQrCodeUrl}`
       : responseQrCodeUrl;
 
@@ -352,12 +352,16 @@ const handleRedirect = async (req, res) => {
       const currentDate = new Date();
       // Ensure we're working with date objects by creating a new Date from the stored date
       const expiryDate = new Date(url.expiresAt);
-      
-      console.log(`URL expiration check: Current date: ${currentDate.toISOString()}, Expiry date: ${expiryDate.toISOString()}`);
-      
+
+      console.log(
+        `URL expiration check: Current date: ${currentDate.toISOString()}, Expiry date: ${expiryDate.toISOString()}`
+      );
+
       // Compare using timestamps (milliseconds since epoch) for reliable comparison
       if (currentDate.getTime() > expiryDate.getTime()) {
-        console.log(`URL ${shortId} has expired. Current time: ${currentDate.getTime()}, Expiry time: ${expiryDate.getTime()}`);
+        console.log(
+          `URL ${shortId} has expired. Current time: ${currentDate.getTime()}, Expiry time: ${expiryDate.getTime()}`
+        );
         return res.status(403).render("error", {
           error: {
             status: 403,
@@ -381,16 +385,21 @@ const handleRedirect = async (req, res) => {
     // Enhanced client IP detection using the clientIp middleware
     try {
       // Now we can use the clientIp property that our middleware added to req
-      const cleanIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+
+      const forwarded = req.headers["x-forwarded-for"];
+      const cleanIp = forwarded
+        ? forwarded.split(",")[0]
+        : req.socket.remoteAddress;
+      console.log("User IP:", cleanIp);
       console.log(`Cleaned IP for geo lookup: ${cleanIp}`);
-      
+
       // Store the actual IP in visit data
       visitData.ipAddress = cleanIp;
-      
-      if (cleanIp && cleanIp !== '127.0.0.1' && cleanIp !== '::1') {
+
+      if (cleanIp && cleanIp !== "127.0.0.1" && cleanIp !== "::1") {
         const geoData = geoip.lookup(cleanIp);
         console.log(`GeoIP lookup result:`, geoData);
-        
+
         if (geoData && geoData.country) {
           visitData.country = geoData.country;
           console.log(`Country detected: ${geoData.country}`);
@@ -398,7 +407,7 @@ const handleRedirect = async (req, res) => {
           console.log(`No country found for IP: ${cleanIp}`);
           visitData.country = "Unknown";
         }
-        
+
         // Add region and city if available for more detailed location info
         if (geoData) {
           if (geoData.region) visitData.region = geoData.region;
@@ -406,8 +415,10 @@ const handleRedirect = async (req, res) => {
         }
       } else {
         console.log(`Using local IP address: ${cleanIp}`);
-        if (cleanIp === '127.0.0.1') {
-          console.log(`Localhost (127.0.0.1) detected - Country will be set to Local`);
+        if (cleanIp === "127.0.0.1") {
+          console.log(
+            `Localhost (127.0.0.1) detected - Country will be set to Local`
+          );
         }
         visitData.country = "Local";
       }
@@ -430,7 +441,7 @@ const handleRedirect = async (req, res) => {
       // Emit link click event for real-time notifications
       if (req.app.get("linkActivityEmitter")) {
         const eventData = {
-          event: 'link_click',
+          event: "link_click",
           linkId: shortId,
           urlName: url.name,
           timestamp: visitData.timestamp.toISOString(),
@@ -438,10 +449,13 @@ const handleRedirect = async (req, res) => {
           deviceType: visitData.deviceType,
           browser: visitData.browser,
           platform: visitData.platform,
-          referrer: visitData.referrer
+          referrer: visitData.referrer,
         };
-        
-        console.log('Emitting link click event from URL controller:', eventData);
+
+        console.log(
+          "Emitting link click event from URL controller:",
+          eventData
+        );
         req.app.get("linkActivityEmitter").emit("linkClick", eventData);
       }
 
@@ -464,7 +478,7 @@ const handleRedirect = async (req, res) => {
     // Emit link click event for real-time notifications
     if (req.app.get("linkActivityEmitter")) {
       const eventData = {
-        event: 'link_click',
+        event: "link_click",
         linkId: shortId,
         urlName: url.name,
         timestamp: visitData.timestamp.toISOString(),
@@ -472,10 +486,10 @@ const handleRedirect = async (req, res) => {
         deviceType: visitData.deviceType,
         browser: visitData.browser,
         platform: visitData.platform,
-        referrer: visitData.referrer
+        referrer: visitData.referrer,
       };
-      
-      console.log('Emitting link click event:', eventData);
+
+      console.log("Emitting link click event:", eventData);
       req.app.get("linkActivityEmitter").emit("linkClick", eventData);
     }
 
@@ -529,7 +543,7 @@ const handleEditURL = async (req, res) => {
         const expDate = new Date(expiresAt);
         expDate.setHours(23, 59, 59, 999);
         url.expiresAt = expDate;
-        
+
         console.log(`Setting expiration date to: ${expDate.toISOString()}`);
       } catch (error) {
         console.error("Invalid date format for expiresAt:", error);
@@ -709,7 +723,7 @@ const handleGetURL = async (req, res) => {
 
     // Build the query - if user is authenticated, check ownership
     let query = { shortId };
-    
+
     // Only check ownership if user is authenticated
     if (req.user && req.user._id) {
       query.createdBy = req.user._id; // Ensure the URL belongs to the current user
@@ -719,7 +733,9 @@ const handleGetURL = async (req, res) => {
     const url = await URL.findOne(query);
 
     if (!url) {
-      console.log(`URL not found: ${shortId} or does not belong to current user`);
+      console.log(
+        `URL not found: ${shortId} or does not belong to current user`
+      );
       return res.status(404).json({
         status: "error",
         statusCode: 404,
