@@ -519,9 +519,15 @@
             <h1>Welcome Back</h1>
             <p class="auth-subtitle">Sign in to continue to shrtn.live</p>
             
-            <% if (error) { %>
+            <% if (locals.error) { %>
             <div class="error-message">
               <i class="fas fa-exclamation-circle"></i> <%= error %>
+            </div>
+            <% } %>
+            
+            <% if (locals.success) { %>
+            <div class="success-message">
+              <i class="fas fa-check-circle"></i> <%- success %>
             </div>
             <% } %>
             
