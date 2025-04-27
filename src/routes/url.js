@@ -17,6 +17,15 @@ const router = express.Router();
 // All routes except the redirect should be protected
 router.post("/", isAuthenticated, urlValidation, handleGenerateURL);
 router.get("/analytics", isAuthenticated, handleAnalytics);
+// Add new route for analytics view page
+router.get("/analytics/view", isAuthenticated, (req, res) => {
+  // Render the analytics view page
+  res.render("dashboard/analytics", { 
+    shortId: req.query.shortId,
+    user: req.user,
+    isAuthenticated: true
+  });
+});
 
 // URL API endpoint to get URL details by shortId - public access, no authentication required
 router.get("/api/:shortId", urlIdValidation, handleGetURL);
