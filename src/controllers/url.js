@@ -387,9 +387,8 @@ const handleRedirect = async (req, res) => {
       // Now we can use the clientIp property that our middleware added to req
 
       const forwarded = req.headers["x-forwarded-for"];
-      const cleanIp = forwarded
-        ? forwarded.split(",")[0]
-        : req.socket.remoteAddress;
+      const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
+      const cleanIp = ip.replace("::ffff:", "").split(",")[0]; // remove IPv6 format
       console.log("User IP:", cleanIp);
       console.log(`Cleaned IP for geo lookup: ${cleanIp}`);
 
