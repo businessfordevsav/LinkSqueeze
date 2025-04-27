@@ -1,0 +1,1886 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="LinkSqueeze - Your Dashboard" />
+    <meta name="author" content="businessfordevsav" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <title>Dashboard - LinkSqueeze</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary: #3b82f6;
+        --primary-dark: #2563eb;
+        --primary-light: #93c5fd;
+        --secondary: #64748b;
+        --background: #f8fafc;
+        --card-bg: #ffffff;
+        --text: #1e293b;
+        --text-light: #64748b;
+        --border: #e2e8f0;
+        --success: #10b981;
+        --warning: #f59e0b;
+        --danger: #ef4444;
+        --dark: #0f172a;
+        --transition-speed: 0.3s;
+      }
+
+      [data-theme="dark"] {
+        --primary: #60a5fa;
+        --primary-dark: #3b82f6;
+        --primary-light: #93c5fd;
+        --secondary: #94a3b8;
+        --background: #0f172a;
+        --card-bg: #1e293b;
+        --text: #f1f5f9;
+        --text-light: #cbd5e1;
+        --border: #334155;
+        --success: #34d399;
+        --warning: #fbbf24;
+        --danger: #f87171;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        color: var(--text);
+        background-color: var(--background);
+        line-height: 1.6;
+        transition: background-color var(--transition-speed) ease;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+
+      .header {
+        background-color: var(--card-bg);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        padding: 1rem 0;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 100;
+        transition: background-color var(--transition-speed) ease;
+      }
+
+      .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary);
+        text-decoration: none;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+
+      .nav-link {
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color var(--transition-speed) ease;
+      }
+
+      .nav-link:hover {
+        color: var(--primary);
+      }
+
+      .user-menu {
+        position: relative;
+      }
+
+      .user-trigger {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 0.375rem;
+        transition: background-color var(--transition-speed) ease;
+      }
+
+      .user-trigger:hover {
+        background-color: var(--background);
+      }
+
+      .user-trigger img {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .user-dropdown {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: var(--card-bg) !important;
+        border-radius: 0.375rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+        width: 200px;
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(10px);
+        visibility: hidden;
+        transition: all var(--transition-speed) ease;
+        z-index: 101;
+        
+      }
+
+      .user-dropdown.visible {
+        opacity: 1;
+        transform: translateY(0);
+        visibility: visible;
+      }
+
+      .dropdown-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+        color: var(--text);
+        text-decoration: none;
+        transition: background-color var(--transition-speed) ease;
+      }
+
+      .dropdown-item:hover {
+        background-color: var(--background);
+      }
+
+      .dropdown-divider {
+        height: 1px;
+        background-color: var(--border);
+        margin: 0.5rem 0;
+      }
+
+      .theme-toggle {
+        background: transparent;
+        border: none;
+        font-size: 1.5rem;
+        color: var(--text);
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 50%;
+        transition: all var(--transition-speed) ease;
+      }
+
+      .theme-toggle:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+        transform: rotate(15deg);
+      }
+
+      [data-theme="dark"] .theme-toggle .fa-moon {
+        display: none;
+      }
+
+      [data-theme="dark"] .theme-toggle .fa-sun {
+        display: inline-block;
+      }
+
+      [data-theme="light"] .theme-toggle .fa-moon {
+        display: inline-block;
+      }
+
+      [data-theme="light"] .theme-toggle .fa-sun {
+        display: none;
+      }
+
+      .dashboard-section {
+        padding: 8rem 0 4rem;
+      }
+
+      .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2.5rem;
+      }
+
+      .dashboard-header h1 {
+        font-size: 2.25rem;
+        font-weight: 700;
+        color: var(--text);
+      }
+
+      .dashboard-header .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+      }
+
+      .stat-card {
+        background-color: var(--card-bg);
+        border-radius: 0.75rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.3s ease, box-shadow 0.3s ease, background-color var(--transition-speed) ease;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      }
+
+      .stat-title {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--text-light);
+        margin-bottom: 0.75rem;
+      }
+
+      .stat-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var (--primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-subtitle {
+        font-size: 0.875rem;
+        color: var(--text-light);
+        margin-top: auto;
+      }
+
+      .links-section {
+        margin-bottom: 3rem;
+      }
+
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+      }
+
+      .section-header h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--text);
+      }
+
+      .search-container {
+        position: relative;
+        width: 300px;
+      }
+
+      .search-input {
+        width: 100%;
+        padding: 0.75rem 1rem 0.75rem 2.5rem;
+        border: 1px solid var(--border);
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        background-color: var(--card-bg);
+        color: var(--text);
+        transition: border-color var(--transition-speed) ease;
+      }
+
+      .search-input:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px var(--primary-light);
+      }
+
+      .search-icon {
+        position: absolute;
+        left: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-light);
+        font-size: 0.875rem;
+      }
+
+      .links-table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: var (--card-bg);
+        border-radius: 0.75rem;
+        overflow: hidden;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        transition: background-color var(--transition-speed) ease;
+      }
+
+      .links-table th,
+      .links-table td {
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .links-table th {
+        font-weight: 600;
+        color: var(--text-light);
+        background-color: var(--background);
+      }
+
+      .links-table tbody tr {
+        transition: background-color var(--transition-speed) ease;
+      }
+
+      .links-table tbody tr:hover {
+        background-color: var(--background);
+      }
+
+      .links-table tbody tr:last-child td {
+        border-bottom: none;
+      }
+
+      .link-cell {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .link-icon {
+        color: var(--primary);
+        font-size: 1.25rem;
+      }
+
+      .link-details {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .link-name {
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+      }
+
+      .link-url {
+        font-size: 0.75rem;
+        color: var(--text-light);
+        word-break: break-all;
+      }
+
+      .clicks-cell {
+        font-weight: 600;
+        color: var (--primary);
+      }
+
+      .status-cell {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .status-badge {
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+
+      .status-active {
+        background-color: rgba(16, 185, 129, 0.1);
+        color: var (--success);
+      }
+
+      .status-inactive {
+        background-color: rgba(100, 116, 139, 0.1);
+        color: var(--secondary);
+      }
+
+      .status-expired {
+        background-color: rgba(239, 68, 68, 0.1);
+        color: var(--danger);
+      }
+
+      .actions-cell {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .action-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 0.375rem;
+        color: var(--text-light);
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        transition: all var (--transition-speed) ease;
+      }
+
+      .action-btn:hover {
+        background-color: var(--background);
+        color: var(--primary);
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background-color: var(--primary);
+        color: white;
+        font-weight: 500;
+        padding: 0.75rem 1.25rem;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        border: none;
+        cursor: pointer;
+        transition: background-color var(--transition-speed) ease,
+          transform 0.2s ease;
+        text-decoration: none;
+      }
+
+      .btn:hover {
+        background-color: var(--primary-dark);
+        transform: translateY(-2px);
+      }
+
+      .btn:active {
+        transform: translateY(0);
+      }
+
+      .btn-secondary {
+        background-color: var(--secondary);
+      }
+
+      .btn-secondary:hover {
+        background-color: var(--text-light);
+      }
+
+      .empty-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 4rem 2rem;
+        background-color: var(--card-bg);
+        border-radius: 0.75rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .empty-icon {
+        font-size: 3rem;
+        color: var(--text-light);
+        margin-bottom: 1.5rem;
+      }
+
+      .empty-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+        color: var(--text);
+      }
+
+      .empty-description {
+        color: var(--text-light);
+        max-width: 500px;
+        margin-bottom: 1.5rem;
+      }
+
+      .pagination {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 2rem;
+      }
+
+      .page-item {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        font-size: 0.875rem;
+        border-radius: 0.375rem;
+        cursor: pointer;
+        transition: all var(--transition-speed) ease;
+      }
+
+      .page-link {
+        color: var(--text);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+      }
+
+      .page-item:hover {
+        background-color: var(--background);
+      }
+
+      .page-item.active {
+        background-color: var(--primary);
+      }
+
+      .page-item.active .page-link {
+        color: white;
+      }
+
+      .page-item.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .create-link-form {
+        background-color: var(--card-bg);
+        border-radius: 0.75rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        padding: 1.5rem;
+        margin-bottom: 3rem;
+        transition: background-color var(--transition-speed) ease;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 1rem;
+        align-items: end;
+      }
+
+      .form-group {
+        margin-bottom: 0;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        font-size: 0.875rem;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--border);
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        background-color: var(--card-bg);
+        color: var(--text);
+        transition: border-color var(--transition-speed) ease;
+      }
+
+      .form-control:focus {
+        outline: none;
+        border-color: var(--primary);
+      }
+
+      .error-message,
+      .success-message {
+        padding: 0.75rem 1rem;
+        border-radius: 0.375rem;
+        margin-bottom: 1.5rem;
+        font-size: 0.875rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .error-message {
+        background-color: rgba(239, 68, 68, 0.1);
+        color: var(--danger);
+        border-left: 4px solid var(--danger);
+      }
+
+      .success-message {
+        background-color: rgba(16, 185, 129, 0.1);
+        color: var(--success);
+        border-left: 4px solid var(--success);
+      }
+
+      /* Mobile responsiveness */
+      @media (max-width: 768px) {
+        .dashboard-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 1rem;
+        }
+
+        .section-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 1rem;
+        }
+
+        .search-container {
+          width: 100%;
+        }
+
+        .links-table {
+          display: block;
+          overflow-x: auto;
+        }
+
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .real-time-section {
+        margin-bottom: 3rem;
+      }
+      
+      .toggle-container {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+      
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 24px;
+      }
+      
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: var(--secondary);
+        transition: .4s;
+        border-radius: 34px;
+      }
+      
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 18px;
+        width: 18px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
+      }
+      
+      input:checked + .slider {
+        background-color: var(--primary);
+      }
+      
+      input:checked + .slider:before {
+        transform: translateX(26px);
+      }
+      
+      .real-time-container {
+        background-color: var(--card-bg);
+        border-radius: 0.75rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        height: 300px;
+        overflow-y: auto;
+        transition: background-color var(--transition-speed) ease;
+      }
+      
+      .real-time-feed {
+        padding: 1rem;
+      }
+      
+      .activity-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.75rem;
+        border-bottom: 1px solid var(--border);
+        transition: background-color var(--transition-speed) ease;
+        animation: fadeIn 0.5s ease;
+      }
+      
+      .activity-item:hover {
+        background-color: var(--background);
+      }
+      
+      .activity-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background-color: rgba(59, 130, 246, 0.1);
+        color: var(--primary);
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      
+      .activity-details {
+        flex: 1;
+      }
+      
+      .activity-title {
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+      }
+      
+      .activity-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        font-size: 0.75rem;
+        color: var(--text-light);
+      }
+      
+      .activity-meta-item {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+      
+      .activity-time {
+        margin-left: auto;
+        font-size: 0.75rem;
+        color: var(--text-light);
+        white-space: nowrap;
+      }
+      
+      .empty-activity {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 3rem 1rem;
+        text-align: center;
+        height: 100%;
+      }
+      
+      .empty-activity .empty-icon {
+        font-size: 2rem;
+        color: var(--text-light);
+        margin-bottom: 1rem;
+      }
+      
+      .empty-activity h3 {
+        font-size: 1.125rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--text);
+      }
+      
+      .empty-activity p {
+        color: var(--text-light);
+        max-width: 400px;
+      }
+      
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      
+      /* Mobile responsiveness */
+      @media (max-width: 768px) {
+        .section-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="container header-content">
+        <a href="/" class="logo">
+          <i class="fas fa-link"></i> LinkSqueeze
+        </a>
+        <div class="nav-links">
+          <a href="/" class="nav-link">Home</a>
+          <a href="/dashboard" class="nav-link">Dashboard</a>
+          <a href="/linksqueeze" class="nav-link">Create Link</a>
+
+          <div class="user-menu">
+            <div class="user-trigger" id="userMenuTrigger">
+              <img src="<%= user.profileImageUrl %>" alt="User profile" />
+              <span><%= user.name.split(' ')[0] %></span>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="user-dropdown" id="userDropdown">
+              <a href="/profile" class="dropdown-item">
+                <i class="fas fa-user"></i>
+                Profile
+              </a>
+              <a href="/dashboard" class="dropdown-item">
+                <i class="fas fa-link"></i>
+                My Links
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item" id="themeToggleMenu">
+                <i class="fas fa-moon theme-moon"></i>
+                <i class="fas fa-sun theme-sun"></i>
+                Toggle Theme
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="/logout" class="dropdown-item">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="dashboard-section">
+      <div class="container">
+        <% if (error) { %>
+        <div class="error-message">
+          <i class="fas fa-exclamation-circle"></i> <%= error %>
+        </div>
+        <% } %>
+
+        <% if (success) { %>
+        <div class="success-message">
+          <i class="fas fa-check-circle"></i> <%= success %>
+        </div>
+        <% } %>
+
+        <div class="dashboard-header">
+          <h1>Welcome, <%= user.name.split(' ')[0] %>!</h1>
+          <a href="/linksqueeze" class="btn">
+            <i class="fas fa-plus"></i> Create New Link
+          </a>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-title">Total Links</div>
+            <div class="stat-value"><%= urls.length %></div>
+            <div class="stat-subtitle">
+              <i class="fas fa-link"></i> All time
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-title">Total Clicks</div>
+            <div class="stat-value">
+              <%= urls.reduce((sum, url) => sum + url.clicks, 0) %>
+            </div>
+            <div class="stat-subtitle">
+              <i class="fas fa-mouse-pointer"></i> All time
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-title">Active Links</div>
+            <div class="stat-value">
+              <%= urls.filter(url => url.isActive && (!url.expiresAt || new Date(url.expiresAt) > new Date())).length %>
+            </div>
+            <div class="stat-subtitle">
+              <i class="fas fa-check-circle"></i> Currently active
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-title">Avg. Clicks / Link</div>
+            <div class="stat-value">
+              <%= urls.length > 0 ? Math.round(urls.reduce((sum, url) => sum + url.clicks, 0) / urls.length) : 0 %>
+            </div>
+            <div class="stat-subtitle">
+              <i class="fas fa-chart-line"></i> Performance
+            </div>
+          </div>
+        </div>
+
+        <div class="links-section">
+          <div class="section-header">
+            <h2>Your Links</h2>
+            <div class="search-container">
+              <input
+                type="text"
+                class="search-input"
+                placeholder="Search links..."
+                id="linkSearchInput"
+              />
+              <i class="fas fa-search search-icon"></i>
+            </div>
+          </div>
+
+          <% if (urls.length === 0) { %>
+          <div class="empty-state">
+            <div class="empty-icon">
+              <i class="fas fa-link"></i>
+            </div>
+            <h3 class="empty-title">No links yet</h3>
+            <p class="empty-description">
+              You haven't created any shortened links yet. Create your first link to start
+              tracking clicks and analytics.
+            </p>
+            <a href="/linksqueeze" class="btn">
+              <i class="fas fa-plus"></i> Create Your First Link
+            </a>
+          </div>
+          <% } else { %>
+          <div class="table-responsive">
+            <table class="links-table">
+              <thead>
+                <tr>
+                  <th style="width: 40%">Link</th>
+                  <th>Created</th>
+                  <th>Clicks</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="linksTableBody">
+                <% urls.forEach(url => { %>
+                <tr>
+                  <td>
+                    <div class="link-cell">
+                      <div class="link-icon">
+                        <i class="fas fa-link"></i>
+                      </div>
+                      <div class="link-details">
+                        <div class="link-name"><%= url.name || `Shortened-${url.shortId}` %></div>
+                        <div class="link-url"><%= baseUrl %>/url/<%= url.shortId %></div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><%= new Date(url.createdAt).toLocaleDateString() %></td>
+                  <td class="clicks-cell"><%= url.clicks %></td>
+                  <td>
+                    <div class="status-cell">
+                      <% 
+                      let statusClass = 'status-active';
+                      let statusText = 'Active';
+                      
+                      if (!url.isActive) {
+                        statusClass = 'status-inactive';
+                        statusText = 'Inactive';
+                      } else if (url.expiresAt && new Date(url.expiresAt) < new Date()) {
+                        statusClass = 'status-expired';
+                        statusText = 'Expired';
+                      }
+                      %>
+                      <span class="status-badge <%= statusClass %>"><%= statusText %></span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="actions-cell">
+                      <a href="/dashboard/analytics/<%= url.shortId %>" class="action-btn" title="View Analytics">
+                        <i class="fas fa-chart-bar"></i>
+                      </a>
+                      <button class="action-btn copy-btn" data-url="<%= baseUrl %>/url/<%= url.shortId %>" title="Copy Link">
+                        <i class="fas fa-copy"></i>
+                      </button>
+                      <button class="action-btn share-btn" data-url="<%= baseUrl %>/url/<%= url.shortId %>" title="Share Link">
+                        <i class="fas fa-share-alt"></i>
+                      </button>
+                      <button class="action-btn edit-btn" onclick="openEditModal('<%= url.shortId %>')" title="Edit Link">
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      <% if(url.qrCodeUrl) { %>
+                      <button class="action-btn qr-view-btn" onclick="previewQRCodeFullscreen('/s3-image/qrcodes/<%= url.qrCodeUrl.split('/').pop() %>', '<%= url.shortId %>')" title="View QR Code">
+                        <i class="fas fa-qrcode"></i>
+                      </button>
+                      <a href="/s3-image/qrcodes/<%= url.qrCodeUrl.split('/').pop() %>" download="qrcode-<%= url.shortId %>.png" class="action-btn" title="Download QR Code">
+                        <i class="fas fa-download"></i>
+                      </a>
+                      <% } %>
+                      <button class="action-btn delete-btn" onclick="openDeleteConfirmModal('<%= url.shortId %>', '<%= url.name || `Link-${url.shortId}` %>')" title="Delete Link">
+                        <i class="fas fa-trash-alt"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <% }); %>
+              </tbody>
+            </table>
+          </div>
+          <% } %>
+        </div>
+
+        <!-- Pagination controls -->
+        <% if (urls.length > 0 && totalPages > 1) { %>
+        <div class="pagination">
+          <% if (currentPage > 1) { %>
+          <div class="page-item">
+            <a href="/dashboard?page=<%= currentPage - 1 %>" class="page-link"><i class="fas fa-chevron-left"></i></a>
+          </div>
+          <% } else { %>
+          <div class="page-item disabled">
+            <span class="page-link"><i class="fas fa-chevron-left"></i></span>
+          </div>
+          <% } %>
+          
+          <% 
+          let startPage = Math.max(1, currentPage - 2);
+          let endPage = Math.min(totalPages, startPage + 4);
+          
+          if (endPage - startPage < 4 && totalPages > 4) {
+            startPage = Math.max(1, endPage - 4);
+          } 
+          %>
+          
+          <% if (startPage > 1) { %>
+          <div class="page-item">
+            <a href="/dashboard?page=1" class="page-link">1</a>
+          </div>
+          <% if (startPage > 2) { %>
+          <div class="page-item disabled">
+            <span class="page-link">...</span>
+          </div>
+          <% } %>
+          <% } %>
+          
+          <% for (let i = startPage; i <= endPage; i++) { %>
+          <div class="page-item <%= i === currentPage ? 'active' : '' %>">
+            <a href="/dashboard?page=<%= i %>" class="page-link"><%= i %></a>
+          </div>
+          <% } %>
+          
+          <% if (endPage < totalPages) { %>
+          <% if (endPage < totalPages - 1) { %>
+          <div class="page-item disabled">
+            <span class="page-link">...</span>
+          </div>
+          <% } %>
+          <div class="page-item">
+            <a href="/dashboard?page=<%= totalPages %>" class="page-link"><%= totalPages %></a>
+          </div>
+          <% } %>
+          
+          <% if (currentPage < totalPages) { %>
+          <div class="page-item">
+            <a href="/dashboard?page=<%= currentPage + 1 %>" class="page-link"><i class="fas fa-chevron-right"></i></a>
+          </div>
+          <% } else { %>
+          <div class="page-item disabled">
+            <span class="page-link"><i class="fas fa-chevron-right"></i></span>
+          </div>
+          <% } %>
+        </div>
+        <% } %>
+
+        <!-- Real-Time Activity Section -->
+        <div class="real-time-section">
+          <div class="section-header">
+            <h2>Real-Time Activity</h2>
+            <div class="toggle-container">
+              <label class="switch">
+                <input type="checkbox" id="realTimeToggle" checked>
+                <span class="slider round"></span>
+              </label>
+              <span>Live Updates</span>
+            </div>
+          </div>
+          
+          <div class="real-time-container">
+            <div class="real-time-feed" id="activityFeed">
+              <div class="empty-activity">
+                <div class="empty-icon">
+                  <i class="fas fa-broadcast-tower"></i>
+                </div>
+                <h3>Waiting for activity...</h3>
+                <p>Recent clicks on your links will appear here in real-time.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Toast notification -->
+    <div id="toast" style="display: none; position: fixed; bottom: 20px; right: 20px; padding: 12px 20px; background-color: var(--card-bg); color: var(--text); border-left: 4px solid var(--primary); border-radius: 4px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); z-index: 1000; transition: all 0.3s ease; max-width: 300px;"></div>
+
+    <!-- Include the edit modal component -->
+    <%- include('../partials/edit-modal') %>
+
+    <!-- Include the delete modal component -->
+    <%- include('../partials/delete-modal') %>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section about">
+            <div class="logo-container">
+              <h2>🔗 LinkSqueeze</h2>
+            </div>
+            <p class="footer-description">
+              A powerful URL shortener with detailed analytics to help you track and optimize your links.
+            </p>
+            <div class="contact">
+              <span><i class="fas fa-envelope"></i> businessfordevsav11@gmail.com</span>
+            </div>
+          </div>
+          
+          <div class="footer-section links">
+            <h2>Quick Links</h2>
+            <ul>
+              <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+              <li><a href="/dashboard"><i class="fas fa-link"></i> Dashboard</a></li>
+              <li><a href="/privacy-policy"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
+              <li><a href="/terms-of-service"><i class="fas fa-file-contract"></i> Terms of Service</a></li>
+              <li><a href="/api-docs"><i class="fas fa-code"></i> API Documentation</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-section social">
+            <h2>Connect With Us</h2>
+            <div class="socials">
+              <a href="https://www.instagram.com/deval_savaliya" class="social-icon"><i class="fab fa-instagram"></i></a>
+              <a href="https://github.com/businessfordevsav/" class="social-icon"><i class="fab fa-github"></i></a>
+              <a href="https://in.linkedin.com/in/deval-savaliya" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <div class="app-version">
+              <span>Version 1.0.0</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="footer-bottom">
+          <p>&copy; <%= new Date().getFullYear() %> LinkSqueeze. All rights reserved.</p>
+          <div class="footer-theme-toggle">
+            <span>Change Theme</span>
+            <button class="footer-theme-btn" id="footerThemeToggle">
+              <i class="fas fa-moon"></i>
+              <i class="fas fa-sun"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <style>
+      /* Footer Styles */
+      .footer {
+        background-color: var(--card-bg);
+        color: var(--text);
+        padding: 3rem 1rem 1rem;
+        margin-top: 3rem;
+        border-top: 1px solid var(--border);
+        box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.05);
+        transition: background-color var(--transition-speed) ease,
+                   color var(--transition-speed) ease;
+      }
+
+      .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .footer-section h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1.25rem;
+        position: relative;
+        display: inline-block;
+      }
+
+      .footer-section h2:after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -10px;
+        width: 50px;
+        height: 3px;
+        background: var(--primary);
+        border-radius: 3px;
+      }
+
+      .logo-container {
+        margin-bottom: 1rem;
+      }
+
+      .footer-description {
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        color: var(--text-light);
+      }
+
+      .contact span {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: var(--text-light);
+        transition: color 0.3s ease;
+      }
+
+      .contact span i {
+        margin-right: 0.5rem;
+        color: var(--primary);
+      }
+
+      .footer-section.links ul {
+        list-style: none;
+      }
+
+      .footer-section.links li {
+        margin-bottom: 0.75rem;
+      }
+
+      .footer-section.links a {
+        color: var(--text-light);
+        text-decoration: none;
+        transition: color 0.3s ease, transform 0.3s ease;
+        display: inline-block;
+      }
+
+      .footer-section.links a:hover {
+        color: var(--primary);
+        transform: translateX(5px);
+      }
+
+      .footer-section.links a i {
+        margin-right: 0.5rem;
+        color: var(--primary);
+      }
+
+      .socials {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .social-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background-color: var(--background);
+        color: var(--primary);
+        border-radius: 50%;
+        text-decoration: none;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+        border: 1px solid var(--border);
+      }
+
+      .social-icon:hover {
+        background-color: var(--primary);
+        color: white;
+        transform: translateY(-5px);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .app-version {
+        margin-top: 1rem;
+        font-size: 0.85rem;
+        color: var(--text-light);
+      }
+
+      .footer-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--border);
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .footer-bottom p {
+        font-size: 0.9rem;
+        color: var(--text-light);
+      }
+
+      .footer-theme-toggle {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .footer-theme-toggle span {
+        font-size: 0.9rem;
+        color: var (--text-light);
+      }
+
+      .footer-theme-btn {
+        background: transparent;
+        border: none;
+        color: var(--text);
+        cursor: pointer;
+        padding: 0.3rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 35px;
+        height: 35px;
+        transition: background-color 0.3s ease;
+      }
+
+      .footer-theme-btn:hover {
+        background-color: var(--border);
+        transform: none;
+        box-shadow: none;
+      }
+
+      [data-theme="dark"] .footer-theme-btn .fa-moon {
+        display: none;
+      }
+
+      [data-theme="dark"] .footer-theme-btn .fa-sun {
+        display: inline-block;
+      }
+
+      [data-theme="light"] .footer-theme-btn .fa-moon {
+        display: inline-block;
+      }
+
+      [data-theme="light"] .footer-theme-btn .fa-sun {
+        display: none;
+      }
+
+      @media (max-width: 768px) {
+        .footer-content {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+
+        .footer-bottom {
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          gap: 1rem;
+        }
+      }
+    </style>
+
+    <script>
+      // Initialize theme from local storage or system preference
+      function initTheme() {
+        const savedTheme = localStorage.getItem("theme");
+
+        if (savedTheme) {
+          document.documentElement.setAttribute("data-theme", savedTheme);
+        } else if (
+          window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches
+        ) {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      }
+
+      // Toggle theme between light and dark
+      function toggleTheme() {
+        const currentTheme =
+          document.documentElement.getAttribute("data-theme") || "light";
+        const newTheme = currentTheme === "light" ? "dark" : "light";
+
+        document.documentElement.setAttribute("data-theme", newTheme);
+        localStorage.setItem("theme", newTheme);
+      }
+
+      // Initialize theme
+      initTheme();
+
+      // User dropdown toggle
+      const userMenuTrigger = document.getElementById("userMenuTrigger");
+      const userDropdown = document.getElementById("userDropdown");
+
+      userMenuTrigger.addEventListener("click", () => {
+        userDropdown.classList.toggle("visible");
+      });
+
+      // Close dropdown when clicking outside
+      document.addEventListener("click", (event) => {
+        if (
+          !userMenuTrigger.contains(event.target) &&
+          !userDropdown.contains(event.target)
+        ) {
+          userDropdown.classList.remove("visible");
+        }
+      });
+
+      // Theme toggle in dropdown
+      document
+        .getElementById("themeToggleMenu")
+        .addEventListener("click", (e) => {
+          e.preventDefault();
+          toggleTheme();
+        });
+
+      // Theme toggle button event listener
+      document
+        .getElementById("footerThemeToggle")
+        .addEventListener("click", toggleTheme);
+
+      // Search functionality
+      const searchInput = document.getElementById("linkSearchInput");
+      const linksTableBody = document.getElementById("linksTableBody");
+
+      if (searchInput && linksTableBody) {
+        searchInput.addEventListener("input", () => {
+          const searchTerm = searchInput.value.toLowerCase();
+          const rows = linksTableBody.querySelectorAll("tr");
+
+          rows.forEach((row) => {
+            const linkName = row
+              .querySelector(".link-name")
+              .textContent.toLowerCase();
+            const linkUrl = row
+              .querySelector(".link-url")
+              .textContent.toLowerCase();
+
+            if (linkName.includes(searchTerm) || linkUrl.includes(searchTerm)) {
+              row.style.display = "";
+            } else {
+              row.style.display = "none";
+            }
+          });
+        });
+      }
+
+      // Copy link functionality
+      document.querySelectorAll(".copy-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const url = btn.getAttribute("data-url");
+          navigator.clipboard.writeText(url).then(
+            () => {
+              // Show a success message
+              const originalIcon = btn.innerHTML;
+              btn.innerHTML = '<i class="fas fa-check"></i>';
+              setTimeout(() => {
+                btn.innerHTML = originalIcon;
+              }, 1500);
+            },
+            () => {
+              alert("Failed to copy link to clipboard");
+            }
+          );
+        });
+      });
+
+      // Share link functionality
+      document.querySelectorAll(".share-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const url = btn.getAttribute("data-url");
+          if (navigator.share) {
+            navigator.share({
+              title: "Check out this link",
+              url: url,
+            }).catch((error) => console.error("Error sharing", error));
+          } else {
+            alert("Sharing is not supported in this browser.");
+          }
+        });
+      });
+
+      // Preview QR code in full screen
+      function previewQRCodeFullscreen(qrCodeUrl, shortId) {
+        const qrPreviewContainer = document.createElement("div");
+        qrPreviewContainer.classList.add("qr-preview-container");
+
+        const qrPreviewOverlay = document.createElement("div");
+        qrPreviewOverlay.classList.add("qr-preview-overlay");
+        qrPreviewOverlay.addEventListener("click", () => {
+          document.body.removeChild(qrPreviewContainer);
+        });
+
+        const qrPreviewContent = document.createElement("div");
+        qrPreviewContent.classList.add("qr-preview-content");
+
+        const qrPreviewImage = document.createElement("img");
+        qrPreviewImage.src = qrCodeUrl;
+        qrPreviewImage.alt = `QR Code for ${shortId}`;
+
+        qrPreviewContent.appendChild(qrPreviewImage);
+        qrPreviewContainer.appendChild(qrPreviewOverlay);
+        qrPreviewContainer.appendChild(qrPreviewContent);
+        document.body.appendChild(qrPreviewContainer);
+      }
+
+      // Add styles for QR code preview
+      const qrPreviewStyles = `
+        .qr-preview-container {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 9999;
+        }
+        .qr-preview-overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.7);
+        }
+        .qr-preview-content {
+          position: relative;
+          z-index: 10000;
+          background: white;
+          padding: 1rem;
+          border-radius: 0.5rem;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .qr-preview-content img {
+          max-width: 100%;
+          height: auto;
+        }
+      `;
+      const qrPreviewStyleSheet = document.createElement("style");
+      qrPreviewStyleSheet.type = "text/css";
+      qrPreviewStyleSheet.innerText = qrPreviewStyles;
+      document.head.appendChild(qrPreviewStyleSheet);
+
+      // Toast notification function
+      function showToast(message) {
+        const toast = document.getElementById("toast");
+        toast.textContent = message;
+        toast.style.display = "block";
+        
+        // Remove any existing animation class
+        toast.classList.remove("hiding");
+        
+        // Set timeout to hide the toast
+        setTimeout(() => {
+          toast.classList.add("hiding");
+          setTimeout(() => {
+            toast.style.display = "none";
+          }, 500);
+        }, 3000);
+      }
+      
+      // Rest of script continues...
+
+      // Real-time activity functionality with WebSocket
+      const activityFeed = document.getElementById('activityFeed');
+      const realTimeToggle = document.getElementById('realTimeToggle');
+      let socket;
+
+      // Connect to WebSocket server 
+      function connectWebSocket() {
+        if (!('WebSocket' in window)) {
+          realTimeToggle.checked = false;
+          return;
+        }
+
+        // Create WebSocket connection
+        const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const wsUrl = `${wsProtocol}//${window.location.host}/ws`;
+        
+        try {
+          socket = new WebSocket(wsUrl);
+          
+          // Connection opened
+          socket.addEventListener('open', (event) => {
+            // Clear existing empty state
+            if (activityFeed.querySelector('.empty-activity')) {
+              activityFeed.innerHTML = '';
+            }
+          });
+          
+          // Listen for messages
+          socket.addEventListener('message', (event) => {
+            try {
+              const data = JSON.parse(event.data);
+              
+              // Handle different event types
+              switch (data.event) {
+                case 'connected':
+                  // Connection established
+                  break;
+                  
+                case 'link_click':
+                  // Check if this click belongs to one of the user's links
+                  const userLinkIds = Array.from(document.querySelectorAll('.link-url')).map(el => {
+                    const url = el.textContent;
+                    return url.split('/').pop(); // Extract shortId from URL
+                  });
+                  
+                  if (userLinkIds.includes(data.linkId)) {
+                    addActivityItem(data);
+                    updateLinkClickCount(data.linkId);
+                    updateTotalClicksCount();
+                  }
+                  break;
+              }
+            } catch (error) {
+              // Error processing message
+            }
+          });
+          
+          // Connection closed
+          socket.addEventListener('close', (event) => {
+            if (realTimeToggle.checked) {
+              // Try to reconnect after a delay if toggle is still on
+              setTimeout(connectWebSocket, 3000);
+            }
+          });
+          
+          // Error handler
+          socket.addEventListener('error', (event) => {
+            // WebSocket error occurred
+          });
+        } catch (error) {
+          realTimeToggle.checked = false;
+        }
+      }
+
+      // Create and add activity item to feed
+      function addActivityItem(data) {
+        console.log('Adding activity item with data:', data);
+        
+        // Clear empty state if it exists
+        const emptyActivity = activityFeed.querySelector('.empty-activity');
+        if (emptyActivity) {
+          activityFeed.innerHTML = '';
+        }
+        
+        // Create activity item element
+        const activityItem = document.createElement('div');
+        activityItem.className = 'activity-item';
+        
+        // Get link name - try various ways
+        let linkName;
+        if (data.urlName) {
+          linkName = data.urlName;
+        } else {
+          linkName = getLinkNameById(data.linkId) || `Link-${data.linkId}`;
+        }
+        
+        console.log('Found link name:', linkName);
+        
+        // Create icon based on device type
+        let deviceIcon = 'fa-desktop';
+        if (data.deviceType === 'Mobile') deviceIcon = 'fa-mobile-alt';
+        if (data.deviceType === 'Tablet') deviceIcon = 'fa-tablet-alt';
+        
+        // Format timestamp
+        const timestamp = data.timestamp ? new Date(data.timestamp) : new Date();
+        const time = timestamp.toLocaleTimeString();
+        
+        // Build HTML content
+        activityItem.innerHTML = `
+          <div class="activity-icon">
+            <i class="fas ${deviceIcon}"></i>
+          </div>
+          <div class="activity-details">
+            <div class="activity-title">Click on ${linkName}</div>
+            <div class="activity-meta">
+              <div class="activity-meta-item">
+                <i class="fas fa-globe"></i>
+                ${data.country || 'Unknown location'}
+              </div>
+              <div class="activity-meta-item">
+                <i class="fas fa-window-maximize"></i>
+                ${data.browser || 'Unknown browser'}
+              </div>
+            </div>
+          </div>
+          <div class="activity-time">${time}</div>
+        `;
+        
+        // Add to the beginning of the feed
+        if (activityFeed.firstChild) {
+          activityFeed.insertBefore(activityItem, activityFeed.firstChild);
+        } else {
+          activityFeed.appendChild(activityItem);
+        }
+        
+        console.log('Activity item added to feed');
+        
+        // Limit number of items to 30
+        const items = activityFeed.querySelectorAll('.activity-item');
+        if (items.length > 30) {
+          activityFeed.removeChild(items[items.length - 1]);
+        }
+      }
+
+      // Helper function to get browser icon
+      function getBrowserIcon(browser) {
+        if (!browser) return 'globe';
+        
+        const browserLower = browser?.toLowerCase() || '';
+        
+        // Map browser names to Font Awesome icon names
+        if (browserLower.includes('chrome')) return 'chrome';
+        if (browserLower.includes('firefox')) return 'firefox';
+        if (browserLower.includes('safari')) return 'safari';
+        if (browserLower.includes('edge')) return 'edge';
+        if (browserLower.includes('opera')) return 'opera';
+        if (browserLower.includes('explorer') || browserLower.includes('ie')) return 'internet-explorer';
+        
+        // Default to globe icon if browser not recognized
+        return 'globe';
+      }
+
+      // Get link name from short ID
+      function getLinkNameById(shortId) {
+        // Loop through all link-url elements
+        const linkUrlElements = document.querySelectorAll('.link-url');
+        for (let i = 0; i < linkUrlElements.length; i++) {
+          const urlEl = linkUrlElements[i];
+          // Check if the URL contains the shortId
+          if (urlEl.textContent.includes(shortId)) {
+            // Get the parent element with class link-details
+            const linkDetails = urlEl.closest('.link-details');
+            if (linkDetails) {
+              // Find the link name element within link-details
+              const nameEl = linkDetails.querySelector('.link-name');
+              if (nameEl) {
+                return nameEl.textContent;
+              }
+            }
+          }
+        }
+        // Return fallback if not found
+        return `Link-${shortId}`;
+      }
+
+      // Update click count for a specific link
+      function updateLinkClickCount(shortId) {
+        const rows = document.querySelectorAll('#linksTableBody tr');
+        
+        rows.forEach(row => {
+          const linkUrlElement = row.querySelector('.link-url');
+          if (linkUrlElement && linkUrlElement.textContent.includes(shortId)) {
+            const clicksCell = row.querySelector('.clicks-cell');
+            if (clicksCell) {
+              let currentClicks = parseInt(clicksCell.textContent);
+              clicksCell.textContent = currentClicks + 1;
+              
+              // Add highlight animation
+              clicksCell.classList.add('highlight-update');
+              setTimeout(() => {
+                clicksCell.classList.remove('highlight-update');
+              }, 2000);
+            }
+          }
+        });
+      }
+
+      // Update total clicks in stats section
+      function updateTotalClicksCount() {
+        const totalClicksElement = document.querySelector('.stats-grid .stat-card:nth-child(2) .stat-value');
+        if (totalClicksElement) {
+          let currentTotal = parseInt(totalClicksElement.textContent);
+          totalClicksElement.textContent = currentTotal + 1;
+          
+          // Add highlight animation
+          totalClicksElement.classList.add('highlight-update');
+          setTimeout(() => {
+            totalClicksElement.classList.remove('highlight-update');
+          }, 2000);
+          
+          // Also update average clicks per link
+          updateAverageClicks();
+        }
+      }
+
+      // Update average clicks per link
+      function updateAverageClicks() {
+        const totalClicksElement = document.querySelector('.stats-grid .stat-card:nth-child(2) .stat-value');
+        const avgClicksElement = document.querySelector('.stats-grid .stat-card:nth-child(4) .stat-value');
+        const linkCount = document.querySelectorAll('#linksTableBody tr').length;
+        
+        if (totalClicksElement && avgClicksElement && linkCount > 0) {
+          const totalClicks = parseInt(totalClicksElement.textContent);
+          const newAvg = Math.round(totalClicks / linkCount);
+          avgClicksElement.textContent = newAvg;
+          
+          // Add highlight animation
+          avgClicksElement.classList.add('highlight-update');
+          setTimeout(() => {
+            avgClicksElement.classList.remove('highlight-update');
+          }, 2000);
+        }
+      }
+
+      // Toggle real-time updates
+      realTimeToggle.addEventListener('change', function() {
+        if (this.checked) {
+          connectWebSocket();
+        } else {
+          if (socket) {
+            socket.close();
+          }
+        }
+      });
+
+      // Add custom contains selector for jQuery-like functionality
+      Element.prototype.matches = Element.prototype.matches || Element.prototype.msMatchesSelector;
+      Element.prototype.closest = Element.prototype.closest || function(selector) {
+        let el = this;
+        while (el) {
+          if (el.matches(selector)) {
+            return el;
+          }
+          el = el.parentElement;
+        }
+        return null;
+      };
+
+      // Add custom contains selector for jQuery-like functionality
+      if (!HTMLElement.prototype.querySelector.contains) {
+        NodeList.prototype.contains = function(text) {
+          for (let i = 0; i < this.length; i++) {
+            if (this[i].textContent.includes(text)) {
+              return this[i];
+            }
+          }
+          return null;
+        };
+      }
+
+      // Add highlight animation styles
+      const highlightStyles = document.createElement('style');
+      highlightStyles.textContent = `
+        .highlight-update {
+          animation: highlight-pulse 2s ease;
+        }
+        
+        @keyframes highlight-pulse {
+          0% { background-color: rgba(59, 130, 246, 0); }
+          30% { background-color: rgba(59, 130, 246, 0.2); }
+          100% { background-color: rgba(59, 130, 246, 0); }
+        }
+      `;
+      document.head.appendChild(highlightStyles);
+
+      // Connect to WebSocket on page load if toggle is checked
+      if (realTimeToggle.checked) {
+        // Small delay to ensure DOM is fully loaded
+        setTimeout(connectWebSocket, 500);
+      }
+    </script>
+  </body>
+</html>

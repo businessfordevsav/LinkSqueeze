@@ -77,6 +77,25 @@
         z-index: 1000;
       "
     >
+      <% if (overlay.showCompanyBranding && overlay.companyLogo && overlay.logoPosition === 'top') { %>
+      <div class="company-branding" style="margin-bottom: 2rem; animation: fadeIn 0.7s ease 0.3s both;">
+        <img 
+          src="<%= overlay.companyLogo %>" 
+          alt="<%= overlay.companyName || 'Company Logo' %>" 
+          style="
+            max-width: <%= overlay.logoSize === 'small' ? '120px' : (overlay.logoSize === 'large' ? '250px' : '180px') %>;
+            max-height: <%= overlay.logoSize === 'small' ? '80px' : (overlay.logoSize === 'large' ? '180px' : '120px') %>;
+            object-fit: contain;
+            border-radius: 8px;
+          "
+        />
+        <% if (overlay.companyName) { %>
+          <div style="margin-top: 0.75rem; font-weight: 600; font-size: <%= overlay.logoSize === 'small' ? '1rem' : (overlay.logoSize === 'large' ? '1.5rem' : '1.25rem') %>;">
+            <%= overlay.companyName %>
+          </div>
+        <% } %>
+      </div>
+      <% } %>
       <div
         class="overlay-content"
         style="
@@ -222,6 +241,25 @@
           animation: fadeIn 0.5s ease 0.7s both;
         "
       >
+        <% if (overlay.showCompanyBranding && overlay.companyLogo && overlay.logoPosition === 'bottom') { %>
+        <div class="company-branding-bottom" style="margin-bottom: 1rem; animation: fadeIn 0.7s ease 0.3s both;">
+          <img 
+            src="<%= overlay.companyLogo %>" 
+            alt="<%= overlay.companyName || 'Company Logo' %>" 
+            style="
+              max-width: <%= overlay.logoSize === 'small' ? '100px' : (overlay.logoSize === 'large' ? '180px' : '140px') %>;
+              max-height: <%= overlay.logoSize === 'small' ? '60px' : (overlay.logoSize === 'large' ? '120px' : '80px') %>;
+              object-fit: contain;
+              border-radius: 8px;
+            "
+          />
+          <% if (overlay.companyName) { %>
+            <div style="margin-top: 0.5rem; font-weight: 600; font-size: <%= overlay.logoSize === 'small' ? '0.9rem' : (overlay.logoSize === 'large' ? '1.2rem' : '1rem') %>;">
+              <%= overlay.companyName %>
+            </div>
+          <% } %>
+        </div>
+        <% } %>
         <p>
           Powered by
           <a
@@ -278,6 +316,6 @@
     // Call tracking function when page loads
     document.addEventListener("DOMContentLoaded", trackOverlayView);
   </script>
-  <%- include('partials/footer') %>
+  
 </body>
 </html>

@@ -6,23 +6,28 @@ import {
   handleEditURL,
   handleToggleURLStatus,
   handleRegenerateQRCode,
-  handleDeleteURL, // Added this import
+  handleDeleteURL,
+  handleGetURL,
 } from "../controllers/url.js";
+import { isAuthenticated } from "../controllers/auth.js";
+import { urlValidation, urlIdValidation, urlUpdateValidation } from "../middleware/validators.js";
 
 const router = express.Router();
 
-router.post("/", handleGenerateURL);
-router.get("/analytics", handleAnalytics);
-router.get("/:shortId", handleRedirect);
+// All routes except the redirect should be protected
+router.post("/", isAuthenticated, urlValidation, handleGenerateURL);
+router.get("/analytics", isAuthenticated, handleAnalytics);
 
-// URL management endpoints
-router.patch("/:shortId", handleEditURL);
-router.patch("/:shortId/status", handleToggleURLStatus);
+// URL API endpoint to get URL details by shortId - public access, no authentication required
+router.get("/api/:shortId", urlIdValidation, handleGetURL);
 
-// QR code regeneration endpoint - update to match the route we used in frontend
-router.post("/:shortId/qrcode", handleRegenerateQRCode);
+// Public redirect route - must be after more specific routes
+router.get("/:shortId", handleRedirect); // Keep this public so anyone can use shortened URLs
 
-// Add the DELETE route for URLs - corrected to match the actual route structure
-router.delete("/:shortId", handleDeleteURL);
+// URL management endpoints - all protected
+router.patch("/:shortId", isAuthenticated, urlUpdateValidation, handleEditURL); // Use the less strict validation
+router.patch("/:shortId/status", isAuthenticated, urlIdValidation, handleToggleURLStatus);
+router.post("/:shortId/qrcode", isAuthenticated, urlIdValidation, handleRegenerateQRCode);
+router.delete("/:shortId", isAuthenticated, urlIdValidation, handleDeleteURL);
 
 export default router;

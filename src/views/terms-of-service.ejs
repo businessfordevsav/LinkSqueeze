@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="LinkSqueeze - Terms of Service"
+    />
+    <meta name="author" content="businessfordevsav" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <title>Terms of Service - LinkSqueeze</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary: #3b82f6;
+        --primary-dark: #2563eb;
+        --primary-light: #93c5fd;
+        --secondary: #64748b;
+        --background: #f8fafc;
+        --card-bg: #ffffff;
+        --text: #1e293b;
+        --text-light: #64748b;
+        --border: #e2e8f0;
+        --success: #10b981;
+        --warning: #f59e0b;
+        --danger: #ef4444;
+        --dark: #0f172a;
+        --transition-speed: 0.3s;
+      }
+
+      [data-theme="dark"] {
+        --primary: #60a5fa;
+        --primary-dark: #3b82f6;
+        --primary-light: #93c5fd;
+        --secondary: #94a3b8;
+        --background: #0f172a;
+        --card-bg: #1e293b;
+        --text: #f1f5f9;
+        --text-light: #cbd5e1;
+        --border: #334155;
+        --success: #34d399;
+        --warning: #fbbf24;
+        --danger: #f87171;
+        --dark: #e2e8f0;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+        background: var(--background);
+        color: var(--text);
+        line-height: 1.6;
+        min-height: 100vh;
+        transition: background-color var(--transition-speed) ease,
+          color var(--transition-speed) ease;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        width: 100%;
+      }
+
+      .header {
+        padding: 1.5rem 0;
+        position: relative;
+        background-color: var(--card-bg);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        transition: background-color var(--transition-speed) ease;
+      }
+
+      .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary);
+        text-decoration: none;
+      }
+
+      .theme-toggle {
+        background: transparent;
+        border: none;
+        font-size: 1.5rem;
+        color: var(--text);
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 50%;
+        transition: all var(--transition-speed) ease;
+      }
+
+      .theme-toggle:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+        transform: rotate(15deg);
+      }
+
+      [data-theme="dark"] .theme-toggle .fa-moon {
+        display: none;
+      }
+
+      [data-theme="dark"] .theme-toggle .fa-sun {
+        display: inline-block;
+      }
+
+      [data-theme="light"] .theme-toggle .fa-moon {
+        display: inline-block;
+      }
+
+      [data-theme="light"] .theme-toggle .fa-sun {
+        display: none;
+      }
+
+      .terms-content {
+        padding: 3rem 0;
+        background-color: var(--background);
+        transition: background-color var(--transition-speed) ease;
+      }
+
+      .terms-content h1 {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+
+      .terms-content h2 {
+        font-size: 1.8rem;
+        margin: 2rem 0 1rem;
+        color: var(--primary);
+      }
+
+      .terms-content h3 {
+        font-size: 1.4rem;
+        margin: 1.5rem 0 0.75rem;
+        color: var(--text);
+      }
+
+      .terms-content p {
+        margin-bottom: 1rem;
+      }
+
+      .terms-content ul, .terms-content ol {
+        margin-bottom: 1rem;
+        padding-left: 1.5rem;
+      }
+
+      .terms-content li {
+        margin-bottom: 0.5rem;
+      }
+
+      .last-updated {
+        font-style: italic;
+        margin-bottom: 2rem;
+        color: var(--text-light);
+        text-align: center;
+      }
+
+      .content-card {
+        background-color: var(--card-bg);
+        border-radius: 1rem;
+        padding: 2rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        margin-bottom: 2rem;
+        transition: background-color var(--transition-speed) ease,
+                  box-shadow var(--transition-speed) ease;
+      }
+
+      .footer {
+        background-color: var(--card-bg);
+        color: var(--text);
+        padding: 3rem 1rem 1rem;
+        margin-top: auto;
+        border-top: 1px solid var(--border);
+        box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.05);
+        transition: background-color var(--transition-speed) ease,
+                   color var(--transition-speed) ease;
+      }
+
+      .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .footer-section h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1.25rem;
+        position: relative;
+        display: inline-block;
+      }
+
+      .footer-section h2:after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -10px;
+        width: 50px;
+        height: 3px;
+        background: var(--primary);
+        border-radius: 3px;
+      }
+
+      .footer-description {
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        color: var(--text-light);
+      }
+
+      .contact span {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: var(--text-light);
+      }
+
+      .contact span i {
+        margin-right: 0.5rem;
+        color: var(--primary);
+      }
+
+      .footer-section.links ul {
+        list-style: none;
+      }
+
+      .footer-section.links li {
+        margin-bottom: 0.75rem;
+      }
+
+      .footer-section.links a {
+        color: var(--text-light);
+        text-decoration: none;
+        transition: color 0.3s ease, transform 0.3s ease;
+        display: inline-block;
+      }
+
+      .footer-section.links a:hover {
+        color: var(--primary);
+        transform: translateX(5px);
+      }
+
+      .footer-section.links a i {
+        margin-right: 0.5rem;
+      }
+
+      .socials {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .social-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background-color: var(--background);
+        color: var(--primary);
+        border-radius: 50%;
+        text-decoration: none;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+        border: 1px solid var(--border);
+      }
+
+      .social-icon:hover {
+        background-color: var(--primary);
+        color: white;
+        transform: translateY(-5px);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .app-version {
+        margin-top: 1rem;
+        font-size: 0.85rem;
+        color: var(--text-light);
+      }
+
+      .footer-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--border);
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .footer-bottom p {
+        font-size: 0.9rem;
+        color: var(--text-light);
+      }
+
+      .footer-theme-toggle {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .footer-theme-btn {
+        background: transparent;
+        border: none;
+        color: var(--text);
+        cursor: pointer;
+        padding: 0.3rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 35px;
+        height: 35px;
+        transition: background-color 0.3s ease;
+      }
+
+      .footer-theme-btn:hover {
+        background-color: var(--border);
+      }
+
+      [data-theme="dark"] .footer-theme-btn .fa-moon {
+        display: none;
+      }
+
+      [data-theme="dark"] .footer-theme-btn .fa-sun {
+        display: inline-block;
+      }
+
+      [data-theme="light"] .footer-theme-btn .fa-moon {
+        display: inline-block;
+      }
+
+      [data-theme="light"] .footer-theme-btn .fa-sun {
+        display: none;
+      }
+
+      @media (max-width: 768px) {
+        .footer-content {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+
+        .footer-bottom {
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          gap: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="container header-content">
+        <a href="/" class="logo">
+          <i class="fas fa-link"></i> LinkSqueeze
+        </a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+          <i class="fas fa-moon"></i>
+          <i class="fas fa-sun"></i>
+        </button>
+      </div>
+    </header>
+
+    <section class="terms-content">
+      <div class="container">
+        <div class="content-card">
+          <h1>Terms of Service</h1>
+          <p class="last-updated">Last updated: April 26, 2025</p>
+
+          <p>Welcome to LinkSqueeze. Please read these Terms of Service ("Terms") carefully before using our URL shortening service.</p>
+
+          <h2>1. Acceptance of Terms</h2>
+          <p>By accessing or using LinkSqueeze services, you agree to be bound by these Terms. If you do not agree to all of these Terms, you may not use our services.</p>
+
+          <h2>2. Description of Service</h2>
+          <p>LinkSqueeze provides a URL shortening service that allows users to create shortened URLs, generate QR codes, and view analytics related to link clicks. We may update, modify, or discontinue any aspect of our service at any time without prior notice.</p>
+
+          <h2>3. Account Registration</h2>
+          <p>Some features of our service may require registration. You agree to provide accurate and complete information when registering and to keep this information up to date. You are responsible for maintaining the security of your account and password. LinkSqueeze cannot and will not be liable for any loss or damage resulting from your failure to comply with this security obligation.</p>
+
+          <h2>4. User Conduct</h2>
+          <p>When using LinkSqueeze, you agree not to:</p>
+          <ul>
+            <li>Create shortened URLs that link to content that is illegal, harmful, threatening, abusive, harassing, defamatory, vulgar, obscene, invasive of privacy, or otherwise objectionable</li>
+            <li>Create shortened URLs for the purpose of phishing, spamming, or spreading malware</li>
+            <li>Use LinkSqueeze to infringe upon intellectual property rights, including copyright and trademark</li>
+            <li>Attempt to gain unauthorized access to the service or other users' accounts</li>
+            <li>Interfere with or disrupt the service or servers or networks connected to the service</li>
+            <li>Use automated systems (bots, scripts, etc.) to access or interact with the service without our express permission</li>
+          </ul>
+
+          <h2>5. Content Responsibility</h2>
+          <p>You are solely responsible for any content linked to through the shortened URLs you create. We reserve the right to remove any shortened URL linking to content that violates these Terms or that we deem inappropriate in our sole discretion, without prior notice.</p>
+
+          <h2>6. Intellectual Property</h2>
+          <p>LinkSqueeze and its original content, features, and functionality are owned by LinkSqueeze and are protected by international copyright, trademark, and other intellectual property laws.</p>
+
+          <h2>7. Third-Party Links</h2>
+          <p>LinkSqueeze has no control over the content of third-party websites that you might link to using our service. We are not responsible for:</p>
+          <ul>
+            <li>The content or accuracy of any linked websites</li>
+            <li>Any loss or damage that may arise from your use of them</li>
+            <li>Any changes or updates to linked websites</li>
+          </ul>
+          <p>You should review the terms and privacy policies of any websites you link to using our service.</p>
+
+          <h2>8. Limitation of Liability</h2>
+          <p>In no event shall LinkSqueeze, its directors, employees, partners, agents, suppliers, or affiliates be liable for any indirect, incidental, special, consequential or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from:</p>
+          <ol>
+            <li>Your access to or use of or inability to access or use the service</li>
+            <li>Any conduct or content of any third party on the service</li>
+            <li>Any content obtained from the service</li>
+            <li>Unauthorized access, use or alteration of your transmissions or content</li>
+          </ol>
+
+          <h2>9. Disclaimer of Warranties</h2>
+          <p>LinkSqueeze provides its service on an "as is" and "as available" basis. We make no warranties or representations about the accuracy or completeness of the content or the reliability, availability, or ability to meet your needs of the service.</p>
+          <p>We disclaim all warranties, express or implied, including without limitation implied warranties of merchantability, fitness for a particular purpose, non-infringement, and those arising by statute or from a course of dealing or usage of trade.</p>
+
+          <h2>10. Indemnification</h2>
+          <p>You agree to defend, indemnify, and hold harmless LinkSqueeze, its officers, directors, employees and agents, from and against any claims, liabilities, damages, losses, and expenses, including, without limitation, reasonable legal fees, arising out of or in any way connected with your access to or use of the service or your violation of these Terms.</p>
+
+          <h2>11. Termination</h2>
+          <p>We may terminate or suspend your access to our service immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms.</p>
+          <p>All provisions of the Terms which by their nature should survive termination shall survive termination, including, without limitation, ownership provisions, warranty disclaimers, indemnity and limitations of liability.</p>
+
+          <h2>12. Changes to Terms</h2>
+          <p>We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material, we will try to provide at least 30 days' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.</p>
+          <p>By continuing to access or use our service after those revisions become effective, you agree to be bound by the revised terms. If you do not agree to the new terms, please stop using the service.</p>
+
+          <h2>13. Governing Law</h2>
+          <p>These Terms shall be governed by and construed in accordance with the laws of the jurisdiction in which LinkSqueeze is established, without regard to its conflict of law provisions.</p>
+
+          <h2>14. Contact Us</h2>
+          <p>If you have any questions about these Terms, please contact us at:</p>
+          <p><strong>Email:</strong> businessfordevsav11@gmail.com</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section about">
+            <div class="logo-container">
+              <h2>🔗 LinkSqueeze</h2>
+            </div>
+            <p class="footer-description">
+              A powerful URL shortener with detailed analytics to help you track and optimize your links.
+            </p>
+            <div class="contact">
+              <span><i class="fas fa-envelope"></i> businessfordevsav11@gmail.com</span>
+            </div>
+          </div>
+          
+          <div class="footer-section links">
+            <h2>Quick Links</h2>
+            <ul>
+              <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+              <li><a href="/dashboard"><i class="fas fa-link"></i> Dashboard</a></li>
+              <li><a href="/privacy-policy"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
+              <li><a href="/terms-of-service"><i class="fas fa-file-contract"></i> Terms of Service</a></li>
+              <li><a href="/api-docs"><i class="fas fa-code"></i> API Documentation</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-section social">
+            <h2>Connect With Us</h2>
+            <div class="socials">
+              <a href="https://www.instagram.com/deval_savaliya" class="social-icon"><i class="fab fa-instagram"></i></a>
+              <a href="https://github.com/businessfordevsav/" class="social-icon"><i class="fab fa-github"></i></a>
+              <a href="https://in.linkedin.com/in/deval-savaliya" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <div class="app-version">
+              <span>Version 1.0.0</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="footer-bottom">
+          <p>&copy; <%= new Date().getFullYear() %> LinkSqueeze. All rights reserved.</p>
+          <div class="footer-theme-toggle">
+            <span>Change Theme</span>
+            <button class="footer-theme-btn" id="footerThemeToggle">
+              <i class="fas fa-moon"></i>
+              <i class="fas fa-sun"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Initialize theme from local storage or system preference
+      function initTheme() {
+        const savedTheme = localStorage.getItem("theme");
+
+        if (savedTheme) {
+          document.documentElement.setAttribute("data-theme", savedTheme);
+        } else if (
+          window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches
+        ) {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      }
+
+      // Toggle theme between light and dark
+      function toggleTheme() {
+        const currentTheme =
+          document.documentElement.getAttribute("data-theme") || "light";
+        const newTheme = currentTheme === "light" ? "dark" : "light";
+
+        document.documentElement.setAttribute("data-theme", newTheme);
+        localStorage.setItem("theme", newTheme);
+      }
+
+      // Initialize theme
+      initTheme();
+
+      // Theme toggle button event listeners
+      document
+        .getElementById("themeToggle")
+        .addEventListener("click", toggleTheme);
+      
+      document
+        .getElementById("footerThemeToggle")
+        .addEventListener("click", toggleTheme);
+    </script>
+  </body>
+</html>

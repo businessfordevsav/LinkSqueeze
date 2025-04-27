@@ -327,6 +327,19 @@ function regenerateQRCode(urlId, shortCode) {
       '<div class="loader"></div><p class="text-center">Generating new QR code...</p>';
   }
 
+  // Get CSRF token if available
+  const csrfToken = document.querySelector('input[name="_csrf"]')?.value;
+  
+  // Prepare headers with CSRF token
+  const headers = {
+    "Content-Type": "application/json",
+  };
+  
+  // Add CSRF token to headers if available
+  if (csrfToken) {
+    headers["CSRF-Token"] = csrfToken;
+  }
+
   const options = {
     adModeEnabled: true,
     iconSizePercent: 20,
@@ -335,9 +348,7 @@ function regenerateQRCode(urlId, shortCode) {
 
   fetch(`/url/${shortCode}/qrcode`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: headers,
     body: JSON.stringify(options),
   })
     .then((response) => {

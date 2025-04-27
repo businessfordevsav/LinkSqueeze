@@ -49,7 +49,13 @@ const urlSchema = new mongoose.Schema(
     ],
     expiresAt: {
       type: Date,
-      default: () => new Date(+new Date() + 30 * 24 * 60 * 60 * 1000),
+      default: function() {
+        // Set default expiration to 30 days from now, at the end of that day
+        const date = new Date();
+        date.setDate(date.getDate() + 30);
+        date.setHours(23, 59, 59, 999);
+        return date;
+      },
     },
     qrCodeUrl: {
       type: String,

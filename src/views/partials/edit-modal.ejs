@@ -1,0 +1,373 @@
+<!-- URL Edit Modal -->
+<div class="modal-overlay" id="editUrlModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(5px);">
+  <div class="modal-container" style="background: var(--card-bg); border-radius: 1rem; max-width: 600px; width: 90%; padding: 1.5rem; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2); animation: slideIn 0.3s ease; color: var(--text); position: relative; max-height: 85vh; overflow-y: auto;">
+    <button class="modal-close" onclick="closeEditModal()" style="position: absolute; top: 1rem; right: 1rem; background: transparent; border: none; font-size: 1.2rem; cursor: pointer; width: auto; height: auto; padding: 0.3rem; color: var(--text); transition: transform 0.3s ease;">
+      <i class="fas fa-times"></i>
+    </button>
+
+    <h2 style="margin-bottom: 1.5rem; color: var(--text)">
+      <i class="fas fa-edit" style="margin-right: 0.5rem"></i> Edit URL
+    </h2>
+
+    <form id="editUrlForm">
+      <input type="hidden" id="editUrlId" name="shortId" />
+      <!-- CSRF token input removed -->
+
+      <div class="form-group" style="margin-bottom: 1rem;">
+        <label for="editName" style="margin-bottom: 0.5rem; display: block; color: var(--text-light); font-weight: 500;">URL Name</label>
+        <input type="text" id="editName" name="name" placeholder="Custom name" maxlength="50" style="width: 100%; padding: 0.75rem 1rem; border: 1px solid var(--border); border-radius: 0.375rem; font-size: 0.875rem; background-color: var(--card-bg); color: var(--text);" />
+      </div>
+
+      <div class="form-group" style="margin-bottom: 1rem;">
+        <label for="editRedirectUrl" style="margin-bottom: 0.5rem; display: block; color: var(--text-light); font-weight: 500;">Destination URL</label>
+        <input type="url" id="editRedirectUrl" name="redirectUrl" placeholder="https://example.com" required style="width: 100%; padding: 0.75rem 1rem; border: 1px solid var(--border); border-radius: 0.375rem; font-size: 0.875rem; background-color: var(--card-bg); color: var(--text);" />
+      </div>
+
+      <div class="form-group" style="margin-bottom: 1rem;">
+        <label for="editExpiresAt" style="margin-bottom: 0.5rem; display: block; color: var(--text-light); font-weight: 500;">Expiration Date</label>
+        <input type="date" id="editExpiresAt" name="expiresAt" min="<%= new Date().toISOString().split('T')[0] %>" style="width: 100%; padding: 0.75rem 1rem; border: 1px solid var(--border); border-radius: 0.375rem; font-size: 0.875rem; background-color: var(--card-bg); color: var(--text);" />
+      </div>
+
+      <div class="form-group" style="display: flex; align-items: center; margin: 1rem 0;">
+        <label for="editIsActive" style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; margin-bottom: 0;">
+          <div class="toggle-switch" style="position: relative; width: 50px; height: 24px; border-radius: 12px; background-color: var(--secondary); transition: background-color 0.3s ease;">
+            <input type="checkbox" id="editIsActive" name="isActive" style="opacity: 0; width: 0; height: 0" onchange="this.parentNode.style.backgroundColor = this.checked ? 'var(--success)' : 'var(--secondary)'; this.nextElementSibling.style.transform = this.checked ? 'translateX(26px)' : 'translateX(0)';" />
+            <span class="toggle-slider" style="position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%; background-color: white; transition: transform 0.3s ease;"></span>
+          </div>
+          <span style="font-weight: 500; color: var(--text);">Active</span>
+        </label>
+      </div>
+
+      <div class="form-group" id="editCustomOverlaySection" style="margin-bottom: 1rem;">
+        <div style="display: flex; align-items: center; margin: 1rem 0; padding: 0.5rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+          <label for="editCustomOverlayEnabled" style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; margin-bottom: 0;">
+            <div class="toggle-switch" style="position: relative; width: 50px; height: 24px; border-radius: 12px; background-color: var(--secondary); transition: background-color 0.3s ease;">
+              <input type="checkbox" id="editCustomOverlayEnabled" name="customOverlayEnabled" style="opacity: 0; width: 0; height: 0" onchange="this.parentNode.style.backgroundColor = this.checked ? 'var(--primary)' : 'var(--secondary)'; toggleEditOverlayOptions(this.checked);" />
+              <span class="toggle-slider" style="position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%; background-color: white; transition: transform 0.3s ease;"></span>
+            </div>
+            <span style="font-weight: 500; color: var(--text);">Enable Custom Overlay Page</span>
+          </label>
+        </div>
+
+        <div id="editOverlayOptions" class="expandable-section" style="max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out;">
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label for="editOverlayText" style="margin-bottom: 0.5rem; display: block; color: var(--text-light); font-weight: 500;">Overlay Message</label>
+            <input type="text" id="editOverlayText" name="overlayText" placeholder="Message to display on the overlay page" style="width: 100%; padding: 0.75rem 1rem; border: 1px solid var(--border); border-radius: 0.375rem; font-size: 0.875rem; background-color: var(--card-bg); color: var(--text);" />
+          </div>
+
+          <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap;">
+            <div class="form-group" style="flex: 1; min-width: 180px; margin-bottom: 1rem;">
+              <label for="editButtonText" style="margin-bottom: 0.5rem; display: block; color: var(--text-light); font-weight: 500;">Button Text</label>
+              <input type="text" id="editButtonText" name="buttonText" placeholder="Call to action" style="width: 100%; padding: 0.75rem 1rem; border: 1px solid var(--border); border-radius: 0.375rem; font-size: 0.875rem; background-color: var(--card-bg); color: var(--text);" />
+            </div>
+
+            <div class="form-group" style="flex: 2; min-width: 180px; margin-bottom: 1rem;">
+              <label for="editButtonUrl" style="margin-bottom: 0.5rem; display: block; color: var(--text-light); font-weight: 500;">Button URL</label>
+              <input type="url" id="editButtonUrl" name="buttonUrl" placeholder="https://example.com/special-offer" style="width: 100%; padding: 0.75rem 1rem; border: 1px solid var(--border); border-radius: 0.375rem; font-size: 0.875rem; background-color: var(--card-bg); color: var(--text);" />
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label for="editBackgroundColor" style="margin-bottom: 0.5rem; display: block; color: var(--text-light); font-weight: 500;">Background Color</label>
+            <input type="color" id="editBackgroundColor" name="backgroundColor" value="#000000" style="width: 100%; height: 40px; border-radius: 0.5rem; border: 1px solid var(--border);" />
+            <div class="color-opacity" style="margin-top: 0.5rem">
+              <label for="editBackgroundOpacity" style="color: var(--text-light); font-size: 0.9rem">Opacity: <span id="opacityValue">80%</span></label>
+              <input type="range" id="editBackgroundOpacity" min="0" max="100" value="80" style="width: 100%" oninput="updateOpacityPreview(this.value)" />
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <div class="form-group" style="flex: 1; min-width: 180px; margin-bottom: 1rem;">
+              <label for="editTextColor" style="margin-bottom: 0.5rem; display: block; color: var(--text-light); font-weight: 500;">Text Color</label>
+              <input type="color" id="editTextColor" name="textColor" value="#ffffff" style="width: 100%; height: 40px; border-radius: 0.5rem; border: 1px solid var(--border);" />
+            </div>
+
+            <div class="form-group" style="flex: 1; min-width: 180px; margin-bottom: 1rem;">
+              <label for="editButtonColor" style="margin-bottom: 0.5rem; display: block; color: var(--text-light); font-weight: 500;">Button Color</label>
+              <input type="color" id="editButtonColor" name="buttonColor" value="#3b82f6" style="width: 100%; height: 40px; border-radius: 0.5rem; border: 1px solid var(--border);" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions" style="display: flex; gap: 1rem; margin-top: 1.5rem">
+        <button type="button" onclick="closeEditModal()" style="display: inline-flex; align-items: center; justify-content: center; background-color: var(--secondary); color: white; font-weight: 500; padding: 0.75rem 1.25rem; border-radius: 0.375rem; font-size: 0.875rem; border: none; cursor: pointer; flex: 1;">Cancel</button>
+        <button type="submit" id="saveUrlBtn" style="display: inline-flex; align-items: center; justify-content: center; background-color: var(--primary); color: white; font-weight: 500; padding: 0.75rem 1.25rem; border-radius: 0.375rem; font-size: 0.875rem; border: none; cursor: pointer; flex: 1;">Save Changes</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<style>
+@keyframes slideIn {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.expanded {
+  max-height: 1000px !important;
+}
+
+/* Fix color input appearance in dark mode */
+[data-theme="dark"] input[type="color"] {
+  background-color: #334155 !important;
+  border: 1px solid #475569 !important;
+}
+
+/* Add focus styles */
+#editUrlForm input[type="text"]:focus,
+#editUrlForm input[type="url"]:focus,
+#editUrlForm input[type="date"]:focus {
+  outline: none;
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+/* Ensure the toggle switch works correctly */
+.toggle-switch input:checked + .toggle-slider {
+  transform: translateX(26px) !important;
+}
+
+/* Make modal responsive */
+@media (max-width: 576px) {
+  .modal-container {
+    width: 95% !important;
+    padding: 1rem !important;
+    max-height: 80vh !important;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions button {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+}
+</style>
+
+<script>
+// Edit URL functionality
+function openEditModal(shortId) {
+  console.log(`Opening edit modal for URL: ${shortId}`);
+  
+  // Show loading state in modal
+  document.getElementById("editUrlId").value = shortId;
+  document.getElementById("editUrlModal").style.display = "flex";
+  document.getElementById("saveUrlBtn").disabled = true;
+  document.getElementById("saveUrlBtn").innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+  
+  // Fetch URL data
+  fetch(`/url/api/${shortId}`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Server responded with status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      if (data.status === "success" && data.body.url) {
+        const urlData = data.body.url;
+        
+        // Set form values
+        document.getElementById("editName").value = urlData.name || "";
+        document.getElementById("editRedirectUrl").value = urlData.redirectUrl || "";
+        
+        // Set expiration date if available
+        if (urlData.expiresAt) {
+          const date = new Date(urlData.expiresAt);
+          document.getElementById("editExpiresAt").value = date.toISOString().split("T")[0];
+        } else {
+          document.getElementById("editExpiresAt").value = "";
+        }
+        
+        // Set active state and update toggle appearance
+        const activeCheckbox = document.getElementById("editIsActive");
+        activeCheckbox.checked = urlData.isActive;
+        activeCheckbox.parentNode.style.backgroundColor = urlData.isActive ? "var(--success)" : "var(--secondary)";
+        activeCheckbox.nextElementSibling.style.transform = urlData.isActive ? "translateX(26px)" : "translateX(0)";
+        
+        // Handle custom overlay settings
+        const hasOverlay = urlData.customOverlay && urlData.customOverlay.enabled;
+        setOverlaySettings(hasOverlay, urlData.customOverlay);
+        
+        // Reset button state
+        document.getElementById("saveUrlBtn").disabled = false;
+        document.getElementById("saveUrlBtn").innerHTML = 'Save Changes';
+        
+      } else {
+        console.error("Failed to get URL data:", data);
+        closeEditModal();
+        showToast("Could not find the link you're trying to edit");
+      }
+    })
+    .catch(error => {
+      console.error("Error fetching URL data:", error);
+      closeEditModal();
+      showToast("Error: " + error.message);
+    });
+}
+
+function closeEditModal() {
+  document.getElementById("editUrlModal").style.display = "none";
+  document.getElementById("editUrlForm").reset();
+}
+
+function toggleEditOverlayOptions(show) {
+  const overlayOptions = document.getElementById("editOverlayOptions");
+  if (show) {
+    overlayOptions.classList.add("expanded");
+  } else {
+    overlayOptions.classList.remove("expanded");
+  }
+}
+
+function updateOpacityPreview(value) {
+  document.getElementById("opacityValue").textContent = `${value}%`;
+}
+
+function setOverlaySettings(hasOverlay, overlayData) {
+  // Set overlay checkbox state
+  const overlayCheckbox = document.getElementById("editCustomOverlayEnabled");
+  overlayCheckbox.checked = hasOverlay;
+  overlayCheckbox.parentNode.style.backgroundColor = hasOverlay ? "var(--primary)" : "var(--secondary)";
+  overlayCheckbox.nextElementSibling.style.transform = hasOverlay ? "translateX(26px)" : "translateX(0)";
+
+  // Toggle overlay options visibility
+  toggleEditOverlayOptions(hasOverlay);
+
+  // If overlay is enabled, set overlay form values
+  if (hasOverlay && overlayData) {
+    document.getElementById("editOverlayText").value = overlayData.text || "";
+    document.getElementById("editButtonText").value = overlayData.buttonText || "";
+    document.getElementById("editButtonUrl").value = overlayData.buttonUrl || "";
+
+    // Parse background color and opacity for color picker
+    const bgColor = overlayData.backgroundColor || "rgba(0, 0, 0, 0.8)";
+    let opacity = 80;
+    
+    if (bgColor.includes("rgba")) {
+      const match = bgColor.match(/rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)/);
+      if (match && match[4]) {
+        opacity = Math.round(parseFloat(match[4]) * 100);
+
+        // Convert RGB to hex for color picker
+        const r = parseInt(match[1]).toString(16).padStart(2, "0");
+        const g = parseInt(match[2]).toString(16).padStart(2, "0");
+        const b = parseInt(match[3]).toString(16).padStart(2, "0");
+        document.getElementById("editBackgroundColor").value = `#${r}${g}${b}`;
+      }
+    } else {
+      document.getElementById("editBackgroundColor").value = bgColor;
+    }
+
+    // Set opacity slider and text
+    document.getElementById("editBackgroundOpacity").value = opacity;
+    document.getElementById("opacityValue").textContent = `${opacity}%`;
+    
+    // Set text and button colors
+    document.getElementById("editTextColor").value = overlayData.textColor || "#ffffff";
+    document.getElementById("editButtonColor").value = overlayData.buttonColor || "#3b82f6";
+  }
+}
+
+// Handle form submission
+document.getElementById("editUrlForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const shortId = document.getElementById("editUrlId").value;
+  const name = document.getElementById("editName").value;
+  const redirectUrl = document.getElementById("editRedirectUrl").value;
+  const expiresAt = document.getElementById("editExpiresAt").value;
+  const isActive = document.getElementById("editIsActive").checked;
+
+  const overlayEnabled = document.getElementById("editCustomOverlayEnabled").checked;
+  const overlayText = document.getElementById("editOverlayText").value;
+  const buttonText = document.getElementById("editButtonText").value;
+  const buttonUrl = document.getElementById("editButtonUrl").value;
+
+  // Handle color values
+  const backgroundColor = document.getElementById("editBackgroundColor").value;
+  const opacity = document.getElementById("editBackgroundOpacity").value / 100;
+  const textColor = document.getElementById("editTextColor").value;
+  const buttonColor = document.getElementById("editButtonColor").value;
+
+  // Convert hex to rgba for background
+  let bgColor;
+  if (backgroundColor.startsWith("#")) {
+    const r = parseInt(backgroundColor.substring(1, 3), 16);
+    const g = parseInt(backgroundColor.substring(3, 5), 16);
+    const b = parseInt(backgroundColor.substring(5, 7), 16);
+    bgColor = `rgba(${r}, ${g}, ${b}, ${opacity})`;
+  } else {
+    bgColor = backgroundColor;
+  }
+
+  // Build custom overlay object
+  const customOverlay = overlayEnabled
+    ? {
+        enabled: true,
+        text: overlayText,
+        buttonText: buttonText,
+        buttonUrl: buttonUrl,
+        backgroundColor: bgColor,
+        textColor: textColor,
+        buttonColor: buttonColor,
+      }
+    : { enabled: false };
+
+  // Build data for API request
+  const data = {
+    name: name,
+    redirectUrl: redirectUrl,
+    isActive: isActive,
+    customOverlay: customOverlay,
+  };
+
+  // Add expiresAt if provided
+  if (expiresAt) {
+    data.expiresAt = expiresAt;
+  }
+
+  // Show loading state
+  const saveBtn = document.getElementById("saveUrlBtn");
+  const originalText = saveBtn.innerHTML;
+  saveBtn.disabled = true;
+  saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+
+  // Headers for API request
+  const headers = {
+    "Content-Type": "application/json"
+  };
+
+  // Send API request
+  fetch(`/url/${shortId}`, {
+    method: "PATCH",
+    headers: headers,
+    body: JSON.stringify(data),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.status === "success") {
+        showToast("URL updated successfully");
+        closeEditModal();
+
+        // Reload the page to show updated info
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      } else {
+        throw new Error(data.message || "Failed to update URL");
+      }
+    })
+    .catch((error) => {
+      console.error("Error updating URL:", error);
+      showToast("Error: " + error.message);
+
+      // Reset button
+      saveBtn.disabled = false;
+      saveBtn.innerHTML = originalText;
+    });
+});
+</script>

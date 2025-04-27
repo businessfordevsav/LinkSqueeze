@@ -63,7 +63,6 @@
         background: var(--background);
         color: var(--text);
         line-height: 1.6;
-        padding: 2rem;
         min-height: 100vh;
         transition: background-color var(--transition-speed) ease,
           color var(--transition-speed) ease;
@@ -73,14 +72,186 @@
         max-width: 1200px;
         margin: 0 auto;
         padding: 0 1rem;
+        width: 100%;
       }
 
+      /* Header and Navigation Styles */
       .header {
-        text-align: center;
-        margin-bottom: 2rem;
-        padding: 1.5rem 0;
+        background-color: var(--card-bg);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        padding: 1rem 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 100;
+        transition: background-color var(--transition-speed) ease;
+      }
+
+      .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary);
+        text-decoration: none;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+
+      .nav-link {
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color var(--transition-speed) ease;
+      }
+
+      .nav-link:hover {
+        color: var(--primary);
+      }
+
+      .user-menu {
         position: relative;
       }
+
+      .user-trigger {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 0.375rem;
+        transition: background-color var(--transition-speed) ease;
+      }
+
+      .user-trigger:hover {
+        background-color: var(--background);
+      }
+
+      .user-trigger img {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .user-dropdown {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: var(--card-bg);
+        border-radius: 0.375rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+        width: 200px;
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(10px);
+        visibility: hidden;
+        transition: all var(--transition-speed) ease;
+        z-index: 101;
+      }
+
+      .user-dropdown.visible {
+        opacity: 1;
+        transform: translateY(0);
+        visibility: visible;
+      }
+
+      .dropdown-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+        color: var(--text);
+        text-decoration: none;
+        transition: background-color var(--transition-speed) ease;
+      }
+
+      .dropdown-item:hover {
+        background-color: var(--background);
+      }
+
+      .dropdown-divider {
+        height: 1px;
+        background-color: var(--border);
+        margin: 0.5rem 0;
+      }
+
+      /* Existing theme toggle styles */
+      @media (max-width: 768px) {
+        body {
+          padding: 1rem 0.5rem;
+        }
+        
+        .container {
+          padding: 0 0.5rem;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        body {
+          padding: 0.5rem 0.25rem;
+        }
+
+        .header {
+          padding: 1rem 0;
+        }
+        
+        .header h1 {
+          font-size: 1.8rem;
+        }
+        
+        .header p {
+          font-size: 0.9rem;
+        }
+
+        .stat {
+          font-size: 1.2rem;
+        }
+
+        .table-container {
+          margin: 0 -1rem;
+          width: calc(100% + 2rem);
+          border-radius: 0;
+        }
+        
+        /* Improve card padding on small screens */
+        .card {
+          padding: 1rem 0.75rem;
+        }
+        
+        /* Make URL cards more compact */
+        .url-card {
+          padding: 0.75rem 0.5rem;
+        }
+        
+        /* Better handling of action buttons on mobile */
+        .action-btn {
+          font-size: 0.9rem;
+          padding: 0.5rem 0.75rem;
+        }
+        
+        /* Toast positioning for mobile */
+        .toast {
+          bottom: 10px;
+          right: 10px;
+          left: 10px;
+          width: calc(100% - 20px);
+          text-align: center;
+        }
+      }
+
 
       .theme-toggle {
         position: absolute;
@@ -137,7 +308,8 @@
       }
 
       input[type="url"],
-      input[type="text"] {
+      input[type="text"],
+      input[type="date"] {
         width: 100%;
         padding: 0.8rem;
         border: 2px solid var(--border);
@@ -228,7 +400,7 @@
         text-align: center;
         color: var(--text);
         transition: background-color var(--transition-speed) ease,
-          color var(--transition-speed) ease;
+          color var (--transition-speed) ease;
       }
 
       .analytics-grid {
@@ -269,7 +441,7 @@
       .click-history-table {
         width: 100%;
         border-collapse: collapse;
-        background: var(--card-bg);
+        background: var (--card-bg);
         border-radius: 0.8rem;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         min-width: 600px;
@@ -289,6 +461,39 @@
         background: var(--background);
         font-weight: 600;
         transition: background-color var(--transition-speed) ease;
+      }
+      
+      /* Responsive table for mobile devices */
+      @media (max-width: 768px) {
+        .table-container {
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+          margin: 0 -1rem;
+          padding: 0 1rem;
+        }
+        
+        .click-history-table {
+          width: 100%;
+          min-width: 500px;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        .click-history-table th,
+        .click-history-table td {
+          padding: 0.6rem 0.5rem;
+          font-size: 0.8rem;
+        }
+        
+        .click-history-table {
+          min-width: 450px;
+        }
+        
+        .device-icon, .platform-icon, .browser-icon {
+          display: block;
+          font-size: 1.2rem;
+          margin-bottom: 0.2rem;
+        }
       }
 
       .toast {
@@ -416,7 +621,11 @@
 
       @media (max-width: 768px) {
         body {
-          padding: 1rem;
+          padding: 1rem 0.5rem;
+        }
+        
+        .container {
+          padding: 0 0.5rem;
         }
 
         .header {
@@ -435,6 +644,12 @@
           flex-direction: column;
           width: 100%;
         }
+        
+        .action-btn {
+          width: 100%;
+          justify-content: center;
+          margin-top: 0.5rem;
+        }
 
         .analytics-grid {
           grid-template-columns: 1fr;
@@ -444,15 +659,27 @@
           flex-direction: column;
           align-items: flex-start;
         }
+        
+        .url-card {
+          padding: 0.75rem;
+        }
       }
 
       @media (max-width: 480px) {
         body {
-          padding: 0.5rem;
+          padding: 0.5rem 0.25rem;
         }
 
         .header {
           padding: 1rem 0;
+        }
+        
+        .header h1 {
+          font-size: 1.8rem;
+        }
+        
+        .header p {
+          font-size: 0.9rem;
         }
 
         .stat {
@@ -463,6 +690,31 @@
           margin: 0 -1rem;
           width: calc(100% + 2rem);
           border-radius: 0;
+        }
+        
+        /* Improve card padding on small screens */
+        .card {
+          padding: 1rem 0.75rem;
+        }
+        
+        /* Make URL cards more compact */
+        .url-card {
+          padding: 0.75rem 0.5rem;
+        }
+        
+        /* Better handling of action buttons on mobile */
+        .action-btn {
+          font-size: 0.9rem;
+          padding: 0.5rem 0.75rem;
+        }
+        
+        /* Toast positioning for mobile */
+        .toast {
+          bottom: 10px;
+          right: 10px;
+          left: 10px;
+          width: calc(100% - 20px);
+          text-align: center;
         }
       }
 
@@ -515,11 +767,17 @@
       .expandable-section {
         overflow: hidden;
         max-height: 0;
-        transition: max-height 0.5s ease-out;
+        opacity: 0;
+        transition: max-height 0.5s ease-out, opacity 0.3s ease-in-out, padding 0.3s ease;
+        margin: 0;
+        padding: 0;
       }
 
       .expanded {
         max-height: 2000px;
+        opacity: 1;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
       }
 
       .toggle-btn {
@@ -545,7 +803,7 @@
       }
 
       .toggle-btn.active i {
-        transform: rotate(180deg);
+        transform: rotate(360deg);
       }
 
       .copy-animation {
@@ -563,26 +821,195 @@
           transform: scale(1);
         }
       }
+
+      .qr-code-preview-fullscreen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
+      }
+      
+      .qr-code-preview-fullscreen img {
+        max-width: 80%;
+        max-height: 80%;
+        border: 3px solid white;
+        border-radius: 10px;
+      }
+      
+      .qr-code-preview-fullscreen .close-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: transparent;
+        color: white;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        width: auto;
+        height: auto;
+      }
+      
+      @media (max-width: 480px) {
+        .qr-code-preview-fullscreen img {
+          max-width: 90%;
+          max-height: 90%;
+        }
+        
+        .qr-code-preview-fullscreen .close-btn {
+          top: 10px;
+          right: 10px;
+          font-size: 20px;
+        }
+      }
+
+      @keyframes fadeOut {
+        from {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        to {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+      }
+
+      /* Mobile-specific modal improvements */
+      @media (max-width: 768px) {
+        /* Better modal UX for mobile */
+        .modal-container {
+          width: 95% !important;
+          max-width: 450px;
+          overflow-y: auto;
+          max-height: 85vh;
+        }
+        
+        /* Improve form field spacing on mobile */
+        .form-group {
+          margin-bottom: 0.75rem;
+        }
+        
+        /* Better color picker controls for mobile */
+        input[type="color"] {
+          height: 35px !important;
+        }
+        
+        /* Better modals for smaller screens */
+        .modal-overlay {
+          padding: 15px;
+        }
+        
+        /* Improve toggle buttons on mobile */
+        .toggle-btn {
+          font-size: 0.85rem;
+          padding: 0.3rem;
+        }
+        
+        /* Fix touch targets */
+        button, 
+        input[type="checkbox"], 
+        .action-btn {
+          min-height: 44px; /* Apple recommended touch target size */
+        }
+      }
+      
+      @media (max-width: 480px) {
+        /* More compact design for very small screens */
+        .modal-container {
+          padding: 1rem 0.75rem !important;
+        }
+        
+        /* Better support for modals on small screens */
+        #editOverlayOptions div[style*="display: flex"] {
+          flex-direction: column;
+        }
+        
+        #editOverlayOptions div[style*="display: flex"] > div {
+          flex: unset !important;
+          width: 100%;
+        }
+      }
+
+      /* For webkit browsers to style the date picker */
+      input[type="date"]::-webkit-calendar-picker-indicator {
+        filter: var(--calendar-icon-filter);
+        cursor: pointer;
+      }
+
+      [data-theme="dark"] {
+        --calendar-icon-filter: invert(1);
+      }
+
+      [data-theme="light"] {
+        --calendar-icon-filter: none;
+      }
     </style>
     <script src="/js/qr-code-helpers.js" defer></script>
   </head>
   <body>
     <div class="container">
+      <!-- Replace the simple header with the standard header structure -->
       <header class="header">
+        <div class="container header-content">
+          <a href="/" class="logo">
+            <i class="fas fa-link"></i> LinkSqueeze
+          </a>
+          <div class="nav-links">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/dashboard" class="nav-link">Dashboard</a>
+            <a href="/linksqueeze" class="nav-link">Create Link</a>
+
+            <% if (isAuthenticated) { %>
+            <div class="user-menu">
+              <div class="user-trigger" id="userMenuTrigger">
+                <img src="<%= user.profileImageUrl %>" alt="User profile" />
+                <span><%= user.name.split(' ')[0] %></span>
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="user-dropdown" id="userDropdown">
+                <a href="/profile" class="dropdown-item">
+                  <i class="fas fa-user"></i>
+                  Profile
+                </a>
+                <a href="/dashboard" class="dropdown-item">
+                  <i class="fas fa-link"></i>
+                  My Links
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item" id="themeToggleMenu">
+                  <i class="fas fa-moon theme-moon"></i>
+                  <i class="fas fa-sun theme-sun"></i>
+                  Toggle Theme
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="/logout" class="dropdown-item">
+                  <i class="fas fa-sign-out-alt"></i>
+                  Logout
+                </a>
+              </div>
+            </div>
+            <% } else { %>
+            <a href="/login" class="nav-link">Login</a>
+            <a href="/register" class="nav-link">Register</a>
+            <% } %>
+          </div>
+        </div>
+      </header>
+
+      <div style="margin-top: 5rem; text-align: center; padding: 1rem 0;">
         <h1>🔗 LinkSqueeze URL Shortener</h1>
         <p>Create short links with detailed analytics</p>
-        <button
-          class="theme-toggle"
-          id="themeToggle"
-          aria-label="Toggle dark mode"
-        >
-          <i class="fas fa-moon"></i>
-          <i class="fas fa-sun"></i>
-        </button>
-      </header>
+      </div>
 
       <main class="card">
         <form action="/linksqueeze" method="POST" id="shortenForm">
+          <!-- CSRF token input removed -->
+          
           <div class="form-group">
             <input
               type="url"
@@ -746,7 +1173,7 @@
         </form>
       </main>
 
-      <% if (typeof urls !== 'undefined' && urls.length > 0) { %>
+      <!-- <% if (typeof urls !== 'undefined' && urls.length > 0) { %>
       <section class="url-history">
         <h2>📚 Your Recent Shortened URLs</h2>
         <% urls.forEach(url => { %> <% if (typeof url.shortId !== 'undefined') {
@@ -854,9 +1281,10 @@
             <% if (url.qrCodeUrl) { %>
             <div style="position: relative; display: inline-block">
               <img 
-                src="<%= url.qrCodeUrl %>" 
+                src="<%= typeof ensureProxiedUrl === 'function' ? ensureProxiedUrl(url.qrCodeUrl) : url.qrCodeUrl %>" 
                 alt="QR Code" 
                 loading="lazy" 
+                onerror="console.error('QR code image failed to load:', this.src); this.src='/img/qr-error.png'; this.onerror=null;"
                 onclick="previewQRCodeFullscreen('<%= url.qrCodeUrl %>', '<%= url.shortId %>')"
                 style="cursor: pointer;"
                 title="Click to enlarge"
@@ -982,7 +1410,7 @@
           Create your first shortened URL using the form above.
         </p>
       </div>
-      <% } %>
+      <% } %> -->
 
       <div class="toast" id="toast">Copied to clipboard!</div>
 
@@ -1046,6 +1474,9 @@
 
           <form id="editUrlForm">
             <input type="hidden" id="editUrlId" name="shortId" />
+            <% if (locals.csrfToken) { %>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <% } %>
 
             <div class="form-group">
               <label
@@ -1414,7 +1845,7 @@
             <h3>Delete URL</h3>
           </div>
 
-          <p style="margin-bottom: 1.5rem; line-height: 1.6">
+          <p style="margin-bottom: 1.5rem; line-height: 1.6"></p>
             Are you sure you want to completely delete this URL? This action cannot be undone.
           </p>
 
@@ -1438,7 +1869,307 @@
         </div>
       </div>
 
+      
       <script>
+        // Function to handle the edit URL parameter
+        document.addEventListener("DOMContentLoaded", function() {
+          // Parse URL parameters
+          const urlParams = new URLSearchParams(window.location.search);
+          const editShortId = urlParams.get('edit');
+          
+          if (editShortId) {
+            console.log("Edit parameter detected:", editShortId);
+            
+            // Wait for content to fully load
+            setTimeout(function() {
+              // First try to find the URL card
+              const urlCard = document.querySelector(`.url-card[data-id="${editShortId}"]`);
+              
+              if (urlCard) {
+                console.log("Found URL card, opening edit modal");
+                openEditModal(editShortId);
+              } else {
+                console.log("URL card not found, fetching URL data from API");
+                // If the card doesn't exist (possibly direct edit link), fetch the URL data
+                fetch(`/url/api/${editShortId}`)
+                  .then(response => {
+                    if (!response.ok) {
+                      throw new Error(`Server responded with status: ${response.status}`);
+                    }
+                    return response.json();
+                  })
+                  .then(data => {
+                    if (data.status === "success" && data.body.url) {
+                      // Call openEditModal with the fetched URL data
+                      openEditModal(editShortId, data.body.url);
+                    } else {
+                      console.error("Failed to get URL data:", data);
+                      showToast("Could not find the link you're trying to edit");
+                    }
+                  })
+                  .catch(error => {
+                    console.error("Error fetching URL data:", error);
+                    showToast("Error: " + error.message);
+                  });
+              }
+            }, 500);
+          }
+        });
+      </script>
+    </div>
+    
+    <!-- Footer Section -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section about">
+            <div class="logo-container">
+              <h2>🔗 LinkSqueeze</h2>
+            </div>
+            <p class="footer-description">
+              A powerful URL shortener with detailed analytics to help you track and optimize your links.
+            </p>
+            <div class="contact">
+              <span><i class="fas fa-envelope"></i> businessfordevsav11@gmail.com</span>
+            </div>
+          </div>
+          
+          <div class="footer-section links">
+            <h2>Quick Links</h2>
+            <ul>
+              <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+              <li><a href="/dashboard"><i class="fas fa-link"></i> Dashboard</a></li>
+              <li><a href="/privacy-policy"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
+              <li><a href="/terms-of-service"><i class="fas fa-file-contract"></i> Terms of Service</a></li>
+              <li><a href="/api-docs"><i class="fas fa-code"></i> API Documentation</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-section social">
+            <h2>Connect With Us</h2>
+            <div class="socials">
+              <a href="https://www.instagram.com/deval_savaliya" class="social-icon"><i class="fab fa-instagram"></i></a>
+              <a href="https://github.com/businessfordevsav/" class="social-icon"><i class="fab fa-github"></i></a>
+              <a href="https://in.linkedin.com/in/deval-savaliya" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <div class="app-version">
+              <span>Version 1.0.0</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="footer-bottom">
+          <p>&copy; <%= new Date().getFullYear() %> LinkSqueeze. All rights reserved.</p>
+          <div class="footer-theme-toggle">
+            <span>Change Theme</span>
+            <button class="footer-theme-btn" id="footerThemeToggle">
+              <i class="fas fa-moon"></i>
+              <i class="fas fa-sun"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <style>
+      /* Footer Styles */
+      .footer {
+        background-color: var(--card-bg);
+        color: var(--text);
+        padding: 3rem 1rem 1rem;
+        margin-top: 3rem;
+        border-top: 1px solid var(--border);
+        box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.05);
+        transition: background-color var(--transition-speed) ease,
+                   color var(--transition-speed) ease;
+      }
+
+      .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .footer-section h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1.25rem;
+        position: relative;
+        display: inline-block;
+      }
+
+      .footer-section h2:after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -10px;
+        width: 50px;
+        height: 3px;
+        background: var(--primary);
+        border-radius: 3px;
+      }
+
+      .logo-container {
+        margin-bottom: 1rem;
+      }
+
+      .footer-description {
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        color: var(--text-light);
+      }
+
+      .contact span {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: var(--text-light);
+        transition: color 0.3s ease;
+      }
+
+      .contact span i {
+        margin-right: 0.5rem;
+        color: var(--primary);
+      }
+
+      .footer-section.links ul {
+        list-style: none;
+      }
+
+      .footer-section.links li {
+        margin-bottom: 0.75rem;
+      }
+
+      .footer-section.links a {
+        color: var(--text-light);
+        text-decoration: none;
+        transition: color 0.3s ease, transform 0.3s ease;
+        display: inline-block;
+      }
+
+      .footer-section.links a:hover {
+        color: var(--primary);
+        transform: translateX(5px);
+      }
+
+      .footer-section.links a i {
+        margin-right: 0.5rem;
+        color: var(--primary);
+      }
+
+      .socials {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .social-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background-color: var(--background);
+        color: var(--primary);
+        border-radius: 50%;
+        text-decoration: none;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+        border: 1px solid var(--border);
+      }
+
+      .social-icon:hover {
+        background-color: var(--primary);
+        color: white;
+        transform: translateY(-5px);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .app-version {
+        margin-top: 1rem;
+        font-size: 0.85rem;
+        color: var(--text-light);
+      }
+
+      .footer-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--border);
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .footer-bottom p {
+        font-size: 0.9rem;
+        color: var (--text-light);
+      }
+
+      .footer-theme-toggle {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .footer-theme-toggle span {
+        font-size: 0.9rem;
+        color: var (--text-light);
+      }
+
+      .footer-theme-btn {
+        background: transparent;
+        border: none;
+        color: var(--text);
+        cursor: pointer;
+        padding: 0.3rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 35px;
+        height: 35px;
+        transition: background-color 0.3s ease;
+      }
+
+      .footer-theme-btn:hover {
+        background-color: var(--border);
+        transform: none;
+        box-shadow: none;
+      }
+
+      [data-theme="dark"] .footer-theme-btn .fa-moon {
+        display: none;
+      }
+
+      [data-theme="dark"] .footer-theme-btn .fa-sun {
+        display: inline-block;
+      }
+
+      [data-theme="light"] .footer-theme-btn .fa-moon {
+        display: inline-block;
+      }
+
+      [data-theme="light"] .footer-theme-btn .fa-sun {
+        display: none;
+      }
+
+      @media (max-width: 768px) {
+        .footer-content {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+
+        .footer-bottom {
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          gap: 1rem;
+        }
+      }
+    </style>
+
+    <script>
         // Initialize theme from local storage or system preference
         function initTheme() {
           const savedTheme = localStorage.getItem("theme");
@@ -1466,10 +2197,35 @@
         // Initialize theme
         initTheme();
 
-        // Theme toggle button event listener
-        document
-          .getElementById("themeToggle")
-          .addEventListener("click", toggleTheme);
+        // User dropdown toggle functionality
+        document.addEventListener("DOMContentLoaded", function() {
+          const userMenuTrigger = document.getElementById("userMenuTrigger");
+          const userDropdown = document.getElementById("userDropdown");
+          
+          if (userMenuTrigger && userDropdown) {
+            userMenuTrigger.addEventListener("click", function() {
+              userDropdown.classList.toggle("visible");
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener("click", function(event) {
+              if (!userMenuTrigger.contains(event.target) && !userDropdown.contains(event.target)) {
+                userDropdown.classList.remove("visible");
+              }
+            });
+          }
+
+          
+          
+          // Theme toggle in dropdown
+          const themeToggleMenu = document.getElementById("themeToggleMenu");
+          if (themeToggleMenu) {
+            themeToggleMenu.addEventListener("click", function(e) {
+              e.preventDefault();
+              toggleTheme();
+            });
+          }
+        });
 
         function copyToClipboard(inputId) {
           // Accept inputId as argument
@@ -1559,6 +2315,11 @@
           }
         }
 
+        // Theme toggle button event listener
+      document
+        .getElementById("footerThemeToggle")
+        .addEventListener("click", toggleTheme);
+
         // Toggle advanced options section
         document
           .getElementById("advancedToggle")
@@ -1606,9 +2367,28 @@
         document
           .getElementById("shortenForm")
           .addEventListener("submit", function (e) {
+            // Properly handle the expiration date
+            const expirationDateInput = document.getElementById("expirationDate");
+            if (expirationDateInput && expirationDateInput.value) {
+              // Create a hidden field to store the ISO date string
+              const hiddenDate = document.createElement("input");
+              hiddenDate.type = "hidden";
+              hiddenDate.name = "expiresAt";
+              
+              // Create a date with time set to end of day
+              const expDate = new Date(expirationDateInput.value);
+              expDate.setHours(23, 59, 59, 999);
+              
+              hiddenDate.value = expDate.toISOString();
+              console.log(`Setting expiration date to: ${hiddenDate.value}`);
+              
+              // Add to form
+              this.appendChild(hiddenDate);
+            }
+            
             const button = document.getElementById("submitBtn");
             const originalText = button.innerHTML;
-
+            
             // Disable button and show loading state
             button.disabled = true;
             button.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Shortening...`;
@@ -1727,111 +2507,166 @@
         }
 
         // Edit URL functionality
-        function openEditModal(shortId) {
-          const url = document.querySelector(`.url-card[data-id="${shortId}"]`);
-          if (!url) return;
+        /**
+ * Opens the URL edit modal
+ * @param {string} shortId - The short ID of the URL to edit
+ * @param {Object} urlData - Optional URL data object when accessing from other pages
+ */
+function openEditModal(shortId, urlData) {
+  console.log(`Opening edit modal for URL: ${shortId}`);
+  
+  // Different handling based on where the edit request comes from
+  if (urlData) {
+    // CASE 1: Direct access from dashboard/analytics pages (API data provided)
+    handleDirectEdit(shortId, urlData);
+  } else {
+    // CASE 2: Edit from the current page (URL card exists on page)
+    handleLocalEdit(shortId);
+  }
+  
+  // Show modal regardless of edit source
+  const modal = document.getElementById("editUrlModal");
+  modal.style.display = "flex";
+}
 
-          // Get data attributes
-          const shortUrlInput = document.getElementById(
-            `shortUrlInput-${shortId}`
-          );
-          const redirectUrl = shortUrlInput
-            ? shortUrlInput.getAttribute("data-redirect")
-            : "";
-          const name = url.getAttribute("data-name") || "";
-          const expiresAt = url.getAttribute("data-expires") || "";
-          const isActive = url.getAttribute("data-active") === "true";
+/**
+ * Handles edit when accessed directly from another page (dashboard/analytics)
+ * @param {string} shortId - The URL's short ID
+ * @param {Object} urlData - URL data from API
+ */
+function handleDirectEdit(shortId, urlData) {
+  // Set basic form values
+  document.getElementById("editUrlId").value = shortId;
+  document.getElementById("editName").value = urlData.name || "";
+  document.getElementById("editRedirectUrl").value = urlData.redirectUrl || "";
 
-          // Set values in form
-          document.getElementById("editUrlId").value = shortId;
-          document.getElementById("editName").value = name;
-          document.getElementById("editRedirectUrl").value = redirectUrl || "";
+  // Set expiration date if available
+  if (urlData.expiresAt) {
+    const date = new Date(urlData.expiresAt);
+    document.getElementById("editExpiresAt").value = date.toISOString().split("T")[0];
+  } else {
+    document.getElementById("editExpiresAt").value = "";
+  }
 
-          // Handle expiration date - convert if needed
-          if (expiresAt) {
-            const date = new Date(expiresAt);
-            document.getElementById("editExpiresAt").value = date
-              .toISOString()
-              .split("T")[0];
-          } else {
-            document.getElementById("editExpiresAt").value = "";
-          }
+  // Set active state and update toggle appearance
+  const activeCheckbox = document.getElementById("editIsActive");
+  activeCheckbox.checked = urlData.isActive;
+  activeCheckbox.parentNode.style.backgroundColor = urlData.isActive ? "var(--success)" : "var(--secondary)";
+  activeCheckbox.nextElementSibling.style.transform = urlData.isActive ? "translateX(26px)" : "translateX(0)";
 
-          // Handle active state - set the checked property and move the slider
-          const activeCheckbox = document.getElementById("editIsActive");
-          activeCheckbox.checked = isActive;
-          activeCheckbox.parentNode.style.backgroundColor = isActive
-            ? "var(--success)"
-            : "var(--secondary)";
-          const activeSlider = activeCheckbox.nextElementSibling;
-          activeSlider.style.transform = isActive
-            ? "translateX(26px)"
-            : "translateX(0)";
+  // Handle custom overlay settings
+  const hasOverlay = urlData.customOverlay && urlData.customOverlay.enabled;
+  setOverlaySettings(hasOverlay, urlData.customOverlay);
+}
 
-          // Handle custom overlay settings
-          const hasOverlay = url.getAttribute("data-has-overlay") === "true";
-          const overlayCheckbox = document.getElementById(
-            "editCustomOverlayEnabled"
-          );
-          overlayCheckbox.checked = hasOverlay;
-          overlayCheckbox.parentNode.style.backgroundColor = hasOverlay
-            ? "var(--primary)"
-            : "var(--secondary)";
-          const overlaySlider = overlayCheckbox.nextElementSibling;
-          overlaySlider.style.transform = hasOverlay
-            ? "translateX(26px)"
-            : "translateX(0)";
+/**
+ * Handles edit for URLs on the current page
+ * @param {string} shortId - The URL's short ID
+ */
+function handleLocalEdit(shortId) {
+  // Find URL card on current page
+  const url = document.querySelector(`.url-card[data-id="${shortId}"]`);
+  if (!url) {
+    console.error(`URL card not found for ID: ${shortId}`);
+    showToast("Could not find the URL to edit");
+    return false;
+  }
 
-          // Toggle overlay options based on checkbox
-          toggleEditOverlayOptions(hasOverlay);
+  // Get data from the URL card and shortURL input
+  const shortUrlInput = document.getElementById(`shortUrlInput-${shortId}`);
+  const redirectUrl = shortUrlInput ? shortUrlInput.getAttribute("data-redirect") : "";
+  const name = url.getAttribute("data-name") || "";
+  const expiresAt = url.getAttribute("data-expires") || "";
+  const isActive = url.getAttribute("data-active") === "true";
 
-          // Set overlay values if available
-          if (hasOverlay) {
-            document.getElementById("editOverlayText").value =
-              url.getAttribute("data-overlay-text") || "";
-            document.getElementById("editButtonText").value =
-              url.getAttribute("data-button-text") || "";
-            document.getElementById("editButtonUrl").value =
-              url.getAttribute("data-button-url") || "";
+  // Set basic form values
+  document.getElementById("editUrlId").value = shortId;
+  document.getElementById("editName").value = name;
+  document.getElementById("editRedirectUrl").value = redirectUrl || "";
 
-            // Color values
-            const bgColor = url.getAttribute("data-bg-color") || "#000000";
-            const textColor = url.getAttribute("data-text-color") || "#ffffff";
-            const buttonColor =
-              url.getAttribute("data-button-color") || "#3b82f6";
+  // Set expiration date if available
+  if (expiresAt) {
+    const date = new Date(expiresAt);
+    document.getElementById("editExpiresAt").value = date.toISOString().split("T")[0];
+  } else {
+    document.getElementById("editExpiresAt").value = "";
+  }
 
-            // Parse background color and opacity
-            let opacity = 80;
-            if (bgColor.includes("rgba")) {
-              const match = bgColor.match(
-                /rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)/
-              );
-              if (match && match[4]) {
-                opacity = Math.round(parseFloat(match[4]) * 100);
+  // Set active state and update toggle appearance
+  const activeCheckbox = document.getElementById("editIsActive");
+  activeCheckbox.checked = isActive;
+  activeCheckbox.parentNode.style.backgroundColor = isActive ? "var(--success)" : "var(--secondary)";
+  activeCheckbox.nextElementSibling.style.transform = isActive ? "translateX(26px)" : "translateX(0)";
 
-                // Convert RGB to hex
-                const r = parseInt(match[1]).toString(16).padStart(2, "0");
-                const g = parseInt(match[2]).toString(16).padStart(2, "0");
-                const b = parseInt(match[3]).toString(16).padStart(2, "0");
-                document.getElementById(
-                  "editBackgroundColor"
-                ).value = `#${r}${g}${b}`;
-              }
-            } else {
-              document.getElementById("editBackgroundColor").value = bgColor;
-            }
+  // Handle custom overlay settings
+  const hasOverlay = url.getAttribute("data-has-overlay") === "true";
+  
+  // Build overlay data from attributes if overlay is enabled
+  let overlayData = null;
+  if (hasOverlay) {
+    overlayData = {
+      text: url.getAttribute("data-overlay-text") || "",
+      buttonText: url.getAttribute("data-button-text") || "",
+      buttonUrl: url.getAttribute("data-button-url") || "",
+      backgroundColor: url.getAttribute("data-bg-color") || "rgba(0, 0, 0, 0.7)",
+      textColor: url.getAttribute("data-text-color") || "#ffffff",
+      buttonColor: url.getAttribute("data-button-color") || "#3b82f6"
+    };
+  }
+  
+  setOverlaySettings(hasOverlay, overlayData);
+  return true;
+}
 
-            document.getElementById("editBackgroundOpacity").value = opacity;
-            document.getElementById("opacityValue").textContent = `${opacity}%`;
-            document.getElementById("editTextColor").value = textColor;
-            document.getElementById("editButtonColor").value = buttonColor;
-          }
+/**
+ * Sets overlay form settings based on data
+ * @param {boolean} hasOverlay - Whether overlay is enabled
+ * @param {Object} overlayData - Overlay settings if enabled
+ */
+function setOverlaySettings(hasOverlay, overlayData) {
+  // Set overlay checkbox state
+  const overlayCheckbox = document.getElementById("editCustomOverlayEnabled");
+  overlayCheckbox.checked = hasOverlay;
+  overlayCheckbox.parentNode.style.backgroundColor = hasOverlay ? "var(--primary)" : "var(--secondary)";
+  overlayCheckbox.nextElementSibling.style.transform = hasOverlay ? "translateX(26px)" : "translateX(0)";
 
-          // Show modal
-          const modal = document.getElementById("editUrlModal");
-          modal.style.display = "flex";
-        }
+  // Toggle overlay options visibility
+  toggleEditOverlayOptions(hasOverlay);
 
+  // If overlay is enabled, set overlay form values
+  if (hasOverlay && overlayData) {
+    document.getElementById("editOverlayText").value = overlayData.text || "";
+    document.getElementById("editButtonText").value = overlayData.buttonText || "";
+    document.getElementById("editButtonUrl").value = overlayData.buttonUrl || "";
+
+    // Parse background color and opacity for color picker
+    const bgColor = overlayData.backgroundColor || "rgba(0, 0, 0, 0.8)";
+    let opacity = 80;
+    
+    if (bgColor.includes("rgba")) {
+      const match = bgColor.match(/rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)/);
+      if (match && match[4]) {
+        opacity = Math.round(parseFloat(match[4]) * 100);
+
+        // Convert RGB to hex for color picker
+        const r = parseInt(match[1]).toString(16).padStart(2, "0");
+        const g = parseInt(match[2]).toString(16).padStart(2, "0");
+        const b = parseInt(match[3]).toString(16).padStart(2, "0");
+        document.getElementById("editBackgroundColor").value = `#${r}${g}${b}`;
+      }
+    } else {
+      document.getElementById("editBackgroundColor").value = bgColor;
+    }
+
+    // Set opacity slider and text
+    document.getElementById("editBackgroundOpacity").value = opacity;
+    document.getElementById("opacityValue").textContent = `${opacity}%`;
+    
+    // Set text and button colors
+    document.getElementById("editTextColor").value = overlayData.textColor || "#ffffff";
+    document.getElementById("editButtonColor").value = overlayData.buttonColor || "#3b82f6";
+  }
+}
         function closeEditModal() {
           const modal = document.getElementById("editUrlModal");
           modal.style.display = "none";
@@ -1918,6 +2753,9 @@
               data.expiresAt = expiresAt;
             }
 
+            // Get CSRF token if available
+            const csrfToken = document.querySelector('input[name="_csrf"]')?.value;
+
             // Show loading state
             const saveBtn = document.getElementById("saveUrlBtn");
             const originalText = saveBtn.innerHTML;
@@ -1930,6 +2768,7 @@
               method: "PATCH",
               headers: {
                 "Content-Type": "application/json",
+                ...(csrfToken && { "CSRF-Token": csrfToken })
               },
               body: JSON.stringify(data),
             })
@@ -1992,6 +2831,9 @@
             const shortId = this.getAttribute("data-shortid");
             if (!shortId) return;
 
+            // Get CSRF token if available
+            const csrfToken = document.querySelector('input[name="_csrf"]')?.value;
+
             // Show loading state
             const originalText = this.innerHTML;
             this.disabled = true;
@@ -2002,6 +2844,7 @@
               method: "DELETE",
               headers: {
                 "Content-Type": "application/json",
+                ...(csrfToken && { "CSRF-Token": csrfToken })
               }
             })
               .then((response) => {
@@ -2240,260 +3083,104 @@
                 });
             });
         }
+
+        function handleEditFormSubmit() {
+          // Get form values
+          const editShortId = document.getElementById('editShortId').value;
+          const name = document.getElementById('editName').value;
+          const redirectUrl = document.getElementById('editRedirectUrl').value;
+          const expiresAt = document.getElementById('editExpiresAt').value || null;
+          const isActive = document.getElementById('editIsActive').checked;
+          
+          // Build data object
+          const data = {
+            name,
+            redirectUrl,
+            isActive
+          };
+          
+          if (expiresAt) {
+            data.expiresAt = expiresAt;
+          }
+          
+          // Get custom overlay data if enabled
+          const overlayEnabled = document.getElementById('editCustomOverlayEnabled').checked;
+          if (overlayEnabled) {
+            const overlayText = document.getElementById('editOverlayText').value;
+            const buttonText = document.getElementById('editButtonText').value;
+            const buttonUrl = document.getElementById('editButtonUrl').value;
+            const backgroundColor = document.getElementById('editBackgroundColor').value;
+            const opacity = document.getElementById('editBackgroundOpacity').value / 100;
+            const textColor = document.getElementById('editTextColor').value;
+            const buttonColor = document.getElementById('editButtonColor').value;
+            
+            // Convert hex to rgba for background
+            let bgColor;
+            if (backgroundColor.startsWith('#')) {
+              const r = parseInt(backgroundColor.substring(1, 3), 16);
+              const g = parseInt(backgroundColor.substring(3, 5), 16);
+              const b = parseInt(backgroundColor.substring(5, 7), 16);
+              bgColor = `rgba(${r}, ${g}, ${b}, ${opacity})`;
+            } else {
+              bgColor = backgroundColor;
+            }
+            
+            data.customOverlay = {
+              enabled: true,
+              text: overlayText,
+              buttonText,
+              buttonUrl,
+              backgroundColor: bgColor,
+              textColor,
+              buttonColor
+            };
+          } else {
+            data.customOverlay = { enabled: false };
+          }
+          
+          // Show loading state
+          const saveBtn = document.getElementById('editSubmitBtn');
+          saveBtn.disabled = true;
+          saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+          
+          // Get CSRF token if available
+          const csrfToken = document.querySelector('input[name="_csrf"]')?.value;
+          
+          // Prepare headers with CSRF token
+          const headers = {
+            'Content-Type': 'application/json'
+          };
+          
+          // Add CSRF token to headers if available
+          if (csrfToken) {
+            headers['CSRF-Token'] = csrfToken;
+          }
+          
+          // Send update request
+          fetch(`/url/${editShortId}`, {
+            method: 'PATCH',
+            headers: headers,
+            body: JSON.stringify(data)
+          })
+          .then(response => response.json())
+          .then(result => {
+            if (result.status === 'success') {
+              showToast('URL updated successfully');
+              closeModal('editModal');
+              // Reload the page to show updated data
+              location.reload();
+            } else {
+              throw new Error(result.message || 'Failed to update URL');
+            }
+          })
+          .catch(error => {
+            console.error('Error updating URL:', error);
+            showToast(`Error: ${error.message}`);
+            saveBtn.disabled = false;
+            saveBtn.innerHTML = 'Save Changes';
+          });
+        }
       </script>
-    </div>
-    
-    <!-- Footer Section -->
-    <footer class="footer">
-      <div class="container"></div>
-        <div class="footer-content">
-          <div class="footer-section about">
-            <div class="logo-container">
-              <h2>🔗 LinkSqueeze</h2>
-              <p>Simplify your links, amplify your reach.</p>
-            </div>
-            <p class="footer-description">
-              A powerful URL shortener with detailed analytics to help you track and optimize your links.
-            </p>
-            <div class="contact">
-              <span><i class="fas fa-envelope"></i> businessfordevsav11@gmail.com</span>
-            </div>
-          </div>
-          
-          <div class="footer-section links">
-            <h2>Quick Links</h2>
-            <ul>
-              <li><a href="/linksqueeze"><i class="fas fa-home"></i> Home</a></li>
-              <!--/privacy-->
-              <li><a href="/linksqueeze"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
-              <!--/terms-->
-              <li><a href="/linksqueeze"><i class="fas fa-file-contract"></i> Terms of Service</a></li>
-              <li><a href="/api-docs"><i class="fas fa-code"></i> API Documentation</a></li>
-            </ul>
-          </div>
-          
-          <div class="footer-section social">
-            <h2>Connect With Us</h2>
-            <div class="socials">
-              <a href="https://www.instagram.com/deval_savaliya" class="social-icon"><i class="fab fa-instagram"></i></a>
-              <a href="https://github.com/businessfordevsav/" class="social-icon"><i class="fab fa-github"></i></a>
-              <a href="https://in.linkedin.com/in/deval-savaliya" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
-            </div>
-            <div class="app-version">
-              <span>Version 1.0.0</span>
-            </div>
-          </div>
-        </div>
-        
-        <div class="footer-bottom">
-          <p>&copy; <%= new Date().getFullYear() %> LinkSqueeze. All rights reserved.</p>
-          <div class="footer-theme-toggle">
-            <span>Change Theme</span>
-            <button class="footer-theme-btn" onclick="toggleTheme()">
-              <i class="fas fa-moon"></i>
-              <i class="fas fa-sun"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-    </footer>
 
-    <style>
-      /* Footer Styles */
-      .footer {
-        background-color: var(--card-bg);
-        color: var(--text);
-        padding: 3rem 1rem 1rem;
-        margin-top: 3rem;
-        border-top: 1px solid var(--border);
-        box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.05);
-        transition: background-color var(--transition-speed) ease,
-                   color var(--transition-speed) ease;
-      }
-
-      .footer-content {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 2rem;
-        margin-bottom: 2rem;
-      }
-
-      .footer-section h2 {
-        font-size: 1.5rem;
-        margin-bottom: 1.25rem;
-        position: relative;
-        display: inline-block;
-      }
-
-      .footer-section h2:after {
-        content: '';
-        position: absolute;
-        left: 0;
-        bottom: -10px;
-        width: 50px;
-        height: 3px;
-        background: var(--primary);
-        border-radius: 3px;
-      }
-
-      .logo-container {
-        margin-bottom: 1rem;
-      }
-
-      .footer-description {
-        margin-bottom: 1.5rem;
-        line-height: 1.6;
-        color: var(--text-light);
-      }
-
-      .contact span {
-        display: block;
-        margin-bottom: 0.5rem;
-        color: var(--text-light);
-        transition: color 0.3s ease;
-      }
-
-      .contact span i {
-        margin-right: 0.5rem;
-        color: var(--primary);
-      }
-
-      .footer-section.links ul {
-        list-style: none;
-      }
-
-      .footer-section.links li {
-        margin-bottom: 0.75rem;
-      }
-
-      .footer-section.links a {
-        color: var(--text-light);
-        text-decoration: none;
-        transition: color 0.3s ease, transform 0.3s ease;
-        display: inline-block;
-      }
-
-      .footer-section.links a:hover {
-        color: var(--primary);
-        transform: translateX(5px);
-      }
-
-      .footer-section.links a i {
-        margin-right: 0.5rem;
-        color: var(--primary);
-      }
-
-      .socials {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1rem;
-        margin-bottom: 1.5rem;
-      }
-
-      .social-icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 40px;
-        background-color: var(--background);
-        color: var(--primary);
-        border-radius: 50%;
-        text-decoration: none;
-        font-size: 1.2rem;
-        transition: all 0.3s ease;
-        border: 1px solid var(--border);
-      }
-
-      .social-icon:hover {
-        background-color: var(--primary);
-        color: white;
-        transform: translateY(-5px);
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-      }
-
-      .app-version {
-        margin-top: 1rem;
-        font-size: 0.85rem;
-        color: var(--text-light);
-      }
-
-      .footer-bottom {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-top: 1.5rem;
-        border-top: 1px solid var(--border);
-        flex-wrap: wrap;
-        gap: 1rem;
-      }
-
-      .footer-bottom p {
-        font-size: 0.9rem;
-        color: var(--text-light);
-      }
-
-      .footer-theme-toggle {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-
-      .footer-theme-toggle span {
-        font-size: 0.9rem;
-        color: var(--text-light);
-      }
-
-      .footer-theme-btn {
-        background: transparent;
-        border: none;
-        color: var(--text);
-        cursor: pointer;
-        padding: 0.3rem;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 35px;
-        height: 35px;
-        transition: background-color 0.3s ease;
-      }
-
-      .footer-theme-btn:hover {
-        background-color: var(--border);
-        transform: none;
-        box-shadow: none;
-      }
-
-      [data-theme="dark"] .footer-theme-btn .fa-moon {
-        display: none;
-      }
-
-      [data-theme="dark"] .footer-theme-btn .fa-sun {
-        display: inline-block;
-      }
-
-      [data-theme="light"] .footer-theme-btn .fa-moon {
-        display: inline-block;
-      }
-
-      [data-theme="light"] .footer-theme-btn .fa-sun {
-        display: none;
-      }
-
-      @media (max-width: 768px) {
-        .footer-content {
-          grid-template-columns: 1fr;
-          gap: 2rem;
-        }
-
-        .footer-bottom {
-          flex-direction: column;
-          align-items: center;
-          text-align: center;
-          gap: 1rem;
-        }
-      }
-    </style>
   </body>
 </html>
