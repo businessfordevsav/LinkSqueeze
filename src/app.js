@@ -20,6 +20,7 @@ import xssProtection from './middleware/xssProtection.js'; // Import XSS protect
 import securityHeaders from './middleware/securityHeaders.js'; // Import security headers middleware
 import dbSanitize from './middleware/dbSanitize.js'; // Import database sanitization middleware
 import requestLogger from './middleware/requestLogger.js'; // Import request logger middleware
+import clientIpMiddleware from './middleware/clientIpMiddleware.js'; // Import our custom IP detection middleware
 import { errorLogger, notFoundHandler } from './middleware/errorLogger.js'; // Import error logger middleware
 import { WebSocketServer } from 'ws'; // Import WebSocket server
 
@@ -161,7 +162,8 @@ app.use(
 
 // Apply security middleware in the correct order
 app.use(requestLogger); // Request tracking middleware (add as early as possible)
-app.use(xssProtection); // XSS protection first
+app.use(clientIpMiddleware); // Apply our custom IP detection middleware early
+app.use(xssProtection); // XSS protection 
 app.use(dbSanitize); // Then database sanitization
 app.use(securityHeaders); // Then security headers
 app.use(helmet()); // Use Helmet.js for security

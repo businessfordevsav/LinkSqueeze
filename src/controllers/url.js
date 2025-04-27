@@ -378,33 +378,10 @@ const handleRedirect = async (req, res) => {
       referrer: req.get("Referrer") || "Direct",
     };
 
-    // Enhanced client IP detection - prioritize common proxy headers
+    // Enhanced client IP detection using the clientIp middleware
     try {
-      // Check multiple headers where client IP might be found, in order of reliability
-      const ipSources = [
-        req.headers['cf-connecting-ip'],         // Cloudflare
-        req.headers['x-real-ip'],                // Nginx proxy
-        req.headers['x-client-ip'],              // Direct client IP header
-        req.headers['x-forwarded-for'],          // Standard proxy header
-        req.connection?.remoteAddress,           // Direct connection
-        req.socket?.remoteAddress,               // Socket connection
-        req.ip                                   // Express convenience property
-      ];
-      
-      // Find the first non-empty IP source
-      let clientIp = null;
-      for (const source of ipSources) {
-        if (source) {
-          // If it's x-forwarded-for, take the first IP in the list
-          clientIp = source.includes(',') ? source.split(',')[0].trim() : source;
-          break;
-        }
-      }
-      
-      console.log(`Original client IP detection method: ${clientIp}`);
-      
-      // Clean the IP (remove IPv6 prefix if present)
-      const cleanIp = clientIp ? clientIp.replace(/^.*:/, '').trim() : null;
+      // Now we can use the clientIp property that our middleware added to req
+      const cleanIp = req.clientIp;
       console.log(`Cleaned IP for geo lookup: ${cleanIp}`);
       
       // Store the actual IP in visit data
