@@ -2,6 +2,8 @@
 
 A simple and efficient URL shortener built with Node.js and Express.
 
+web :- https://shrtn.live/
+
 ## ✨ Features
 
 - 🔗 Generate short links quickly
