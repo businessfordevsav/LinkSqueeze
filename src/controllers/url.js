@@ -383,16 +383,25 @@ const handleRedirect = async (req, res) => {
     try {
       // Use req.headers['x-forwarded-for'] first as it often contains the actual client IP
       // especially if the application is behind a proxy or load balancer
-      const clientIp = req.headers['x-forwarded-for'] || req.ip || req.socket.remoteAddress;
+      const clientIp = req.headers['x-forwarded-for'] 
+        ? req.headers['x-forwarded-for'].split(',')[0].trim() 
+        : req.ip || req.socket.remoteAddress;
+      
+      console.log(`Original client IP: ${clientIp}`);
       
       // Clean the IP (remove IPv6 prefix if present)
-      const cleanIp = clientIp ? clientIp.replace(/^.*:/, '') : null;
+      const cleanIp = clientIp ? clientIp.replace(/^.*:/, '').trim() : null;
+      console.log(`Cleaned IP for geo lookup: ${cleanIp}`);
       
       if (cleanIp && cleanIp !== '127.0.0.1' && cleanIp !== '::1') {
         const geoData = geoip.lookup(cleanIp);
+        console.log(`GeoIP lookup result:`, geoData);
+        
         if (geoData && geoData.country) {
           visitData.country = geoData.country;
+          console.log(`Country detected: ${geoData.country}`);
         } else {
+          console.log(`No country found for IP: ${cleanIp}`);
           visitData.country = "Unknown";
         }
         
@@ -402,6 +411,7 @@ const handleRedirect = async (req, res) => {
           if (geoData.city) visitData.city = geoData.city;
         }
       } else {
+        console.log(`Using local IP address: ${cleanIp}`);
         visitData.country = "Local";
       }
     } catch (geoError) {
