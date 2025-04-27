@@ -381,7 +381,7 @@ const handleRedirect = async (req, res) => {
     // Enhanced client IP detection using the clientIp middleware
     try {
       // Now we can use the clientIp property that our middleware added to req
-      const cleanIp = req.clientIp;
+      const cleanIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
       console.log(`Cleaned IP for geo lookup: ${cleanIp}`);
       
       // Store the actual IP in visit data

@@ -167,7 +167,7 @@ app.use(xssProtection); // XSS protection
 app.use(dbSanitize); // Then database sanitization
 app.use(securityHeaders); // Then security headers
 app.use(helmet()); // Use Helmet.js for security
-
+app.set('trust proxy', true);
 // Configure Helmet with custom CSP settings
 app.use(
   helmet({
