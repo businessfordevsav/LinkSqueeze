@@ -69,13 +69,13 @@ class EmailService {
     try {
       // Mail options
       const mailOptions = {
-        from: `"LinkSqueeze" <${process.env.EMAIL_FROM || process.env.EMAIL_USER}>`,
+        from: `"shrtn.live" <${process.env.EMAIL_FROM || process.env.EMAIL_USER}>`,
         to,
-        subject: 'LinkSqueeze - Password Reset',
+        subject: 'shrtn.live - Password Reset',
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 10px;">
             <div style="text-align: center; margin-bottom: 20px;">
-              <h1 style="color: #4338ca;">LinkSqueeze</h1>
+              <h1 style="color: #4338ca;">shrtn.live</h1>
             </div>
             <div style="background-color: #f8fafc; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
               <h2 style="color: #1e293b; margin-top: 0;">Password Reset Request</h2>
@@ -87,7 +87,7 @@ class EmailService {
               <p style="color: #64748b; line-height: 1.6;">If you did not request this, please ignore this email and your password will remain unchanged.</p>
             </div>
             <div style="text-align: center; color: #94a3b8; font-size: 14px;">
-              <p>&copy; ${new Date().getFullYear()} LinkSqueeze. All rights reserved.</p>
+              <p>&copy; ${new Date().getFullYear()} shrtn.live. All rights reserved.</p>
             </div>
           </div>
         `

@@ -81,7 +81,7 @@ wss.on('connection', (ws) => {
   // Send a welcome message
   ws.send(JSON.stringify({
     event: 'connected',
-    message: 'Connected to LinkSqueeze real-time updates'
+    message: 'Connected to shrtn.live real-time updates'
   }));
   
   // Handle client disconnection
@@ -143,7 +143,7 @@ app.use(cookieParser());
 // Set up session management with MongoDB
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || "linksqueeze-session-secret",
+    secret: process.env.SESSION_SECRET || "shrtn-live-session-secret",
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
@@ -305,7 +305,7 @@ app.get('/ws', (req, res) => {
 const generateShortId = () => crypto.randomBytes(4).toString("hex");
 
 // Update linksqueeze route to handle authentication
-app.get("/linksqueeze", isAuthenticated, async (req, res) => {
+app.get("/shrtn", isAuthenticated, async (req, res) => {
   try {
     // User is authenticated, show only their links
     let queryObj = { createdBy: req.user._id };
@@ -325,7 +325,7 @@ app.get("/linksqueeze", isAuthenticated, async (req, res) => {
 });
 
 // Changed to use the same handler as /url
-app.post("/linksqueeze", isAuthenticated, async (req, res, next) => {
+app.post("/shrtn", isAuthenticated, async (req, res, next) => {
   try {
     // Map form field names to the expected format in handleGenerateURL
     if (req.body.originalUrl) {
@@ -357,7 +357,7 @@ app.post("/linksqueeze", isAuthenticated, async (req, res, next) => {
     // Call the handleGenerateURL function
     handleGenerateURL(req, res);
   } catch (error) {
-    console.error("Error in /linksqueeze route:", error);
+    console.error("Error in /shrtn.live route:", error);
     const urls = await URL.find({ createdBy: req.user._id }).sort({ createdAt: -1 }).limit(10);
     const baseUrl = `${req.protocol}://${req.get("host")}`;
     res.status(400).render("link_shorter", { 

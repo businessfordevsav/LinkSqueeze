@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="LinkSqueeze - Simple, powerful URL shortener with detailed analytics"
+      content="shrtn.live - Simple, powerful URL shortener with detailed analytics"
     />
     <meta name="author" content="businessfordevsav" />
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    <title>Welcome to LinkSqueeze</title>
+    <title>Welcome to shrtn.live</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
@@ -564,7 +564,7 @@
     <header class="header">
       <div class="container header-content">
         <a href="/" class="logo">
-          <i class="fas fa-link"></i> LinkSqueeze
+          <i class="fas fa-link"></i> shrtn.live
         </a>
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
           <i class="fas fa-moon"></i>
@@ -576,10 +576,10 @@
     <section class="hero">
       <div class="container">
         <h1>Simplify Your Links, <br>Amplify Your Reach</h1>
-        <p>LinkSqueeze is a powerful URL shortener with custom QR codes and detailed analytics to help you track, optimize, and share your links more effectively.</p>
+        <p>shrtn.live is a powerful URL shortener with custom QR codes and detailed analytics to help you track, optimize, and share your links more effectively.</p>
         <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
           <% if (isAuthenticated) { %>
-          <a href="/linksqueeze" class="btn">
+          <a href="/shrtn" class="btn">
             <i class="fas fa-link"></i> Shorten URL Now
           </a>
           <% } else { %>
@@ -662,7 +662,7 @@
         <h2>Ready to Get Started?</h2>
         <p>Create your first shortened URL in seconds and start tracking your link performance.</p>
         <% if (isAuthenticated) { %>
-        <a href="/linksqueeze" class="btn">
+        <a href="/shrtn" class="btn">
           <i class="fas fa-rocket"></i> Start Shortening URLs
         </a>
         <% } else { %>
@@ -678,7 +678,7 @@
         <div class="footer-content">
           <div class="footer-section about">
             <div class="logo-container">
-              <h2>🔗 LinkSqueeze</h2>
+              <h2>🔗 shrtn.live</h2>
             </div>
             <p class="footer-description">
               A powerful URL shortener with detailed analytics to help you track and optimize your links.
@@ -713,7 +713,7 @@
         </div>
         
         <div class="footer-bottom">
-          <p>&copy; <%= new Date().getFullYear() %> LinkSqueeze. All rights reserved.</p>
+          <p>&copy; <%= new Date().getFullYear() %> shrtn.live. All rights reserved.</p>
           <div class="footer-theme-toggle">
             <span>Change Theme</span>
             <button class="footer-theme-btn" id="footerThemeToggle">

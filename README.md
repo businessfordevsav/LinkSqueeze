@@ -122,7 +122,7 @@ A simple and efficient URL shortener built with Node.js and Express.
 
 ### 4️⃣ Web Interface for URL Shortening & Analytics
 
-**Endpoint:** `GET /linksqueeze`
+**Endpoint:** `GET /shrtn`
 
 **Functionality:**
 

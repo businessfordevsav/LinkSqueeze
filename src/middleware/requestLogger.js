@@ -29,34 +29,6 @@ export const requestLogger = (req, res, next) => {
   const userAgent = req.headers['user-agent'] || 'Unknown';
   const referrer = req.headers['referer'] || 'Direct';
   
-  // Get authenticated user info if available
-  const userId = req.user ? req.user._id : null; // Changed to null for unauthenticated users
-  const userEmail = req.user ? req.user.email : 'Unauthenticated';
-  
-  // Create log entry
-  const logEntry = {
-    timestamp,
-    method,
-    url: originalUrl,
-    ip,
-    userAgent,
-    referrer,
-    userId: userId ? userId.toString() : 'Unauthenticated', // For file logs, keep as string
-    userEmail,
-    requestBody: method !== 'GET' ? sanitizeRequestBody(req.body) : undefined
-  };
-  
-  // Log to file
-  fs.appendFile(
-    requestLogPath,
-    JSON.stringify(logEntry) + '\n',
-    (err) => {
-      if (err) {
-        console.error('Failed to write to request log:', err);
-      }
-    }
-  );
-  
   // Store start time to calculate duration
   req._requestStartTime = Date.now();
   
@@ -66,28 +38,61 @@ export const requestLogger = (req, res, next) => {
     // Calculate request duration
     const duration = Date.now() - req._requestStartTime;
     
-    // Add response info to log
-    const responseLogEntry = {
+    // Get authenticated user info at the END of the request
+    // This ensures we get the final auth state after all middleware has run
+    const userId = req.user ? req.user._id : null;
+    const userEmail = req.user ? req.user.email : 'Unauthenticated';
+    
+    // Create complete log entry with final user state
+    const logEntry = {
       timestamp,
       method,
       url: originalUrl,
+      ip,
+      userAgent,
+      referrer,
       statusCode: res.statusCode,
-      duration: duration, // Store as number without 'ms' suffix
-      userId: userId // Store as ObjectId or null
+      duration: duration,
+      userId: userId ? userId.toString() : 'Unauthenticated',
+      userEmail,
+      requestBody: method !== 'GET' ? sanitizeRequestBody(req.body) : undefined
     };
+    
+    // Log to file
+    fs.appendFile(
+      requestLogPath,
+      JSON.stringify(logEntry) + '\n',
+      (err) => {
+        if (err) {
+          console.error('Failed to write to request log:', err);
+        }
+      }
+    );
     
     // Log to console in development
     if (process.env.NODE_ENV !== 'production') {
-      console.log(`${method} ${originalUrl} - ${res.statusCode} - ${duration}ms - User: ${userId || 'Unauthenticated'}`);
+      console.log(`${method} ${originalUrl} - ${res.statusCode} - ${duration}ms - User: ${userId ? userEmail : 'Unauthenticated'}`);
     }
     
-    // For DB logging if needed (implement RequestLog model in a separate file)
+    // For DB logging if needed
     if (mongoose.connection.readyState === 1) {
       try {
         // Dynamically import to avoid circular dependencies
         import('../models/requestLog.js').then(module => {
           const RequestLog = module.default;
-          RequestLog.create(responseLogEntry).catch(err => {
+          
+          // Create DB log with final state
+          RequestLog.create({
+            timestamp: new Date(),
+            method,
+            url: originalUrl,
+            statusCode: res.statusCode,
+            ip,
+            userAgent,
+            userId, // Store as ObjectId or null
+            duration: duration,
+            isError: false
+          }).catch(err => {
             console.error('Failed to save request log to DB:', err);
           });
         });
