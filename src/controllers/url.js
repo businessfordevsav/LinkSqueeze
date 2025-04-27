@@ -369,29 +369,46 @@ const handleRedirect = async (req, res) => {
       }
     }
 
-    // Create visit data
+    // Create visit data with improved IP detection
     const visitData = {
       timestamp: new Date(),
-      ipAddress: req.ip,
       platform,
       browser: req.useragent.browser,
       deviceType: req.useragent.isMobile ? "Mobile" : "Desktop",
       referrer: req.get("Referrer") || "Direct",
     };
 
-    // Try to get country information from IP
+    // Enhanced client IP detection - prioritize common proxy headers
     try {
-      // Use req.headers['x-forwarded-for'] first as it often contains the actual client IP
-      // especially if the application is behind a proxy or load balancer
-      const clientIp = req.headers['x-forwarded-for'] 
-        ? req.headers['x-forwarded-for'].split(',')[0].trim() 
-        : req.ip || req.socket.remoteAddress;
+      // Check multiple headers where client IP might be found, in order of reliability
+      const ipSources = [
+        req.headers['cf-connecting-ip'],         // Cloudflare
+        req.headers['x-real-ip'],                // Nginx proxy
+        req.headers['x-client-ip'],              // Direct client IP header
+        req.headers['x-forwarded-for'],          // Standard proxy header
+        req.connection?.remoteAddress,           // Direct connection
+        req.socket?.remoteAddress,               // Socket connection
+        req.ip                                   // Express convenience property
+      ];
       
-      console.log(`Original client IP: ${clientIp}`);
+      // Find the first non-empty IP source
+      let clientIp = null;
+      for (const source of ipSources) {
+        if (source) {
+          // If it's x-forwarded-for, take the first IP in the list
+          clientIp = source.includes(',') ? source.split(',')[0].trim() : source;
+          break;
+        }
+      }
+      
+      console.log(`Original client IP detection method: ${clientIp}`);
       
       // Clean the IP (remove IPv6 prefix if present)
       const cleanIp = clientIp ? clientIp.replace(/^.*:/, '').trim() : null;
       console.log(`Cleaned IP for geo lookup: ${cleanIp}`);
+      
+      // Store the actual IP in visit data
+      visitData.ipAddress = cleanIp;
       
       if (cleanIp && cleanIp !== '127.0.0.1' && cleanIp !== '::1') {
         const geoData = geoip.lookup(cleanIp);
@@ -412,6 +429,9 @@ const handleRedirect = async (req, res) => {
         }
       } else {
         console.log(`Using local IP address: ${cleanIp}`);
+        if (cleanIp === '127.0.0.1') {
+          console.log(`Localhost (127.0.0.1) detected - Country will be set to Local`);
+        }
         visitData.country = "Local";
       }
     } catch (geoError) {
