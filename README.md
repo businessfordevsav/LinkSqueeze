@@ -1,5 +1,7 @@
+<div class="border border-border rounded-lg bg-background p-6 shadow-sm"><div class="prose prose-sm md:prose-base lg:prose-lg max-w-none prose-headings:font-bold prose-a:text-blue-600" style="user-select: none;"><div id="top" class="">
+
 <div align="center" class="text-center">
-<h1>🚀 LinkSqueeze</h1>
+<h1>LINKSQUEEZE</h1>
 <p><em>Transform Links Into Powerful Engagement Tools</em></p>
 
 <img alt="last-commit" src="https://img.shields.io/github/last-commit/businessfordevsav/LinkSqueeze?style=flat&amp;logo=git&amp;logoColor=white&amp;color=0080ff" class="inline-block mx-1" style="margin: 0px 2px;">
@@ -25,167 +27,71 @@
 <img alt="Axios" src="https://img.shields.io/badge/Axios-5A29E4.svg?style=flat&amp;logo=Axios&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
 <img alt="Jest" src="https://img.shields.io/badge/Jest-C21325.svg?style=flat&amp;logo=Jest&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
 </div>
-
-
-A simple and efficient URL shortener built with Node.js and Express.
-
-web :- https://shrtn.live/
-
-## ✨ Features
-
-- 🔗 Generate short links quickly
-- 🚀 Redirect users to original URLs seamlessly
-- 📊 Track analytics such as visits, IP, platform, browser, and country
-- 🌐 Web interface for generating short links and viewing analytics
-
-## 🛠 Technologies Used
-
-- **Node.js** - Server-side JavaScript runtime
-- **Express** - Minimal and flexible web framework for Node.js
-- **Mongoose** - MongoDB ODM for schema modeling and database operations
-- **GeoIP-lite** - Retrieves geographical information for analytics
-- **NanoID** - Generates short, unique IDs for URLs
-- **express-useragent** - Extracts user-agent details for analytics
-- **EJS** - Embedded JavaScript templating for rendering web pages
-
-## 📥 Installation
-
-1. Clone the repository:
-   ```sh
-   git clone https://github.com/businessfordevsav/short-link.git
-   cd short-link
-   ```
-2. Install dependencies:
-   ```sh
-   npm install
-   ```
-3. Install MongoDB (if not installed):
-   - [MongoDB Installation Guide](https://www.mongodb.com/docs/manual/installation/)
-   - Start MongoDB service:
-     ```sh
-     mongod --dbpath /path/to/your/data/db
-     ```
-4. Start the development server:
-   ```sh
-   npm start  # 🚀 Runs the server in development mode; ensure MongoDB is running.
-   ```
-   The server runs on `http://localhost:3000`.
-
-## 🔗 API Endpoints & Functional Specifications
-
-### 1️⃣ Create Short Link
-
-**Endpoint:** `POST /url`
-
-**Request Body:**
-
-```json
-{
-  "redirectUrl": "https://example.com"
-}
-```
-
-**Response:**
-
-```json
-{
-  "status": "success",
-  "statusCode": 200,
-  "body": {
-    "shortUrl": "http://localhost:3000/url/OZfgjW6-"
-  }
-}
-```
-
-**Notes:**
-
-- ✅ Ensure `redirectUrl` is a valid URL format before sending the request.
-- 🔑 The server generates a unique short URL using NanoID.
-
----
-
-### 2️⃣ Redirect to Original URL
-
-**Endpoint:** `GET /:shortId`
-
-**Functionality:**
-
-- 🔀 Redirects the user to the original URL associated with the given `shortId`.
-- ⚠️ If the `shortId` is invalid or expired, the user receives an error response.
-
----
-
-### 3️⃣ Get Short Link Analytics
-
-**Endpoint:** `GET /url/analytics?shortId=<shortId>`
-
-**Response:**
-
-```json
-{
-  "status": "success",
-  "body": {
-    "visitHistory": [
-      {
-        "ipAddress": "::1",
-        "platform": "Apple Mac",
-        "browser": "Chrome",
-        "country": "Unknown",
-        "_id": "67b0a0878534912e0011d723",
-        "timestamp": "2025-02-15T14:11:19.595Z"
-      }
-    ],
-    "totalVisits": 1
-  }
-}
-```
-
-**Notes:**
-
-- 🔍 This endpoint returns visit history, including device details and IP-based location data.
-- 🔒 Ensure user privacy by anonymizing stored IP addresses.
-- 🔑 Authentication may be required to access analytics data for security reasons.
-- ⚡ Specify whether visit counts update in real-time or if any caching mechanism is in place to optimize performance.
-
----
-
-### 4️⃣ Web Interface for URL Shortening & Analytics
-
-**Endpoint:** `GET /shrtn`
-
-**Functionality:**
-
-- 🎨 Renders a web interface using EJS for users to shorten URLs and view analytics.
-- 📝 Displays a form for submitting URLs.
-- 📌 Shows a list of recently shortened links with expiration dates.
-- 📋 Provides a `Copy` button for convenience.
-
-**Notes:**
-
-- 🔄 The frontend dynamically fetches analytics data from the backend.
-- 🔐 Consider implementing authentication if managing sensitive URLs.
-- ⚙️ Role-based access control may be useful for restricting certain actions.
-
-## 🖼 Screenshot
-
-Below is an example screenshot of the web interface:
-
-|                Generate Short Link Page                 |              Short Link Click History Page              |
-| :-----------------------------------------------------: | :-----------------------------------------------------: |
-| ![Web Interface 1](/resource/screenshot-web-page-1.png) | ![Web Interface 1](/resource/screenshot-web-page-2.png) |
-
-## 📌 Usage
-
-1. 🔗 Send a `POST` request to `/url` with the original URL to generate a short link.
-2. 🔀 Access the shortened URL to be redirected to the original site.
-3. 📊 Retrieve analytics using the `/url/analytics` endpoint.
-4. 🌐 Visit `/linksqueeze` to use the web interface for URL generation and tracking analytics.
-
-## 📜 License
-
-This project is licensed under the MIT License.
-
-**Notes:**
-
-- 📌 Check third-party dependencies for any additional license requirements.
-- 📋 If there are third-party dependencies with different licenses, consider listing them here for clarity.
+<br>
+<hr>
+<h2>Table of Contents</h2>
+<ul class="list-disc pl-4 my-0">
+<li class="my-0"><a href="#overview">Overview</a></li>
+<li class="my-0"><a href="#getting-started">Getting Started</a>
+<ul class="list-disc pl-4 my-0">
+<li class="my-0"><a href="#prerequisites">Prerequisites</a></li>
+<li class="my-0"><a href="#installation">Installation</a></li>
+<li class="my-0"><a href="#usage">Usage</a></li>
+<li class="my-0"><a href="#testing">Testing</a></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2>Overview</h2>
+<p>LinkSqueeze is an advanced URL shortening service built for developers seeking secure, scalable, and insightful link management. It combines URL shortening, real-time analytics, user authentication, and QR code generation into a cohesive platform.</p>
+<p><strong>Why LinkSqueeze?</strong></p>
+<p>This project simplifies URL sharing while providing detailed insights into link performance. The core features include:</p>
+<ul class="list-disc pl-4 my-0">
+<li class="my-0">🧩 <strong>🔗 URL Shortening &amp; Redirection:</strong> Generate unique, trackable short links with comprehensive analytics.</li>
+<li class="my-0">🛡️ <strong>🔒 User Authentication &amp; Profiles:</strong> Secure login, registration, and profile management for personalized control.</li>
+<li class="my-0">📊 <strong>📈 Link Analytics:</strong> Detailed visit history, device info, and geolocation data for each URL.</li>
+<li class="my-0">🖼️ <strong>📸 QR Code Generation:</strong> Create and manage QR codes linked to your URLs for versatile sharing.</li>
+<li class="my-0">⚙️ <strong>🛠️ Middleware &amp; API:</strong> Robust security, validation, and a well-defined API schema for seamless integrations.</li>
+<li class="my-0">🚀 <strong>🧪 Testing &amp; Reliability:</strong> Extensive test coverage ensures stability and maintainability.</li>
+</ul>
+<hr>
+<h2>Getting Started</h2>
+<h3>Prerequisites</h3>
+<p>This project requires the following dependencies:</p>
+<ul class="list-disc pl-4 my-0">
+<li class="my-0"><strong>Programming Language:</strong> HTML</li>
+<li class="my-0"><strong>Package Manager:</strong> Npm</li>
+</ul>
+<h3>Installation</h3>
+<p>Build LinkSqueeze from the source and install dependencies:</p>
+<ol>
+<li class="my-0">
+<p><strong>Clone the repository:</strong></p>
+<pre><code class="language-sh">❯ git clone https://github.com/businessfordevsav/LinkSqueeze
+</code></pre>
+</li>
+<li class="my-0">
+<p><strong>Navigate to the project directory:</strong></p>
+<pre><code class="language-sh">❯ cd LinkSqueeze
+</code></pre>
+</li>
+<li class="my-0">
+<p><strong>Install the dependencies:</strong></p>
+</li>
+</ol>
+<p><strong>Using <a href="https://www.npmjs.com/">npm</a>:</strong></p>
+<pre><code class="language-sh">❯ npm install
+</code></pre>
+<h3>Usage</h3>
+<p>Run the project with:</p>
+<p><strong>Using <a href="https://www.npmjs.com/">npm</a>:</strong></p>
+<pre><code class="language-sh">npm start
+</code></pre>
+<h3>Testing</h3>
+<p>Linksqueeze uses the {<strong>test_framework</strong>} test framework. Run the test suite with:</p>
+<p><strong>Using <a href="https://www.npmjs.com/">npm</a>:</strong></p>
+<pre><code class="language-sh">npm test
+</code></pre>
+<hr>
+<div align="left" class=""><a href="#top">⬆ Return</a></div>
+<hr></div></div></div>
