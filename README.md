@@ -1,4 +1,31 @@
-# 🚀 LinkSqueeze
+<div align="center" class="text-center">
+<h1>🚀 LinkSqueeze</h1>
+<p><em>Transform Links Into Powerful Engagement Tools</em></p>
+
+<img alt="last-commit" src="https://img.shields.io/github/last-commit/businessfordevsav/LinkSqueeze?style=flat&amp;logo=git&amp;logoColor=white&amp;color=0080ff" class="inline-block mx-1" style="margin: 0px 2px;">
+<img alt="repo-top-language" src="https://img.shields.io/github/languages/top/businessfordevsav/LinkSqueeze?style=flat&amp;color=0080ff" class="inline-block mx-1" style="margin: 0px 2px;">
+<img alt="repo-language-count" src="https://img.shields.io/github/languages/count/businessfordevsav/LinkSqueeze?style=flat&amp;color=0080ff" class="inline-block mx-1" style="margin: 0px 2px;">
+<p><em>Built with the tools and technologies:</em></p>
+<img alt="Express" src="https://img.shields.io/badge/Express-000000.svg?style=flat&amp;logo=Express&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
+<img alt="JSON" src="https://img.shields.io/badge/JSON-000000.svg?style=flat&amp;logo=JSON&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
+<img alt="Markdown" src="https://img.shields.io/badge/Markdown-000000.svg?style=flat&amp;logo=Markdown&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
+<img alt="npm" src="https://img.shields.io/badge/npm-CB3837.svg?style=flat&amp;logo=npm&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
+<img alt="Chai" src="https://img.shields.io/badge/Chai-A30701.svg?style=flat&amp;logo=Chai&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
+<img alt="Mongoose" src="https://img.shields.io/badge/Mongoose-F04D35.svg?style=flat&amp;logo=Mongoose&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
+<img alt="Mocha" src="https://img.shields.io/badge/Mocha-8D6748.svg?style=flat&amp;logo=Mocha&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
+<img alt=".ENV" src="https://img.shields.io/badge/.ENV-ECD53F.svg?style=flat&amp;logo=dotenv&amp;logoColor=black" class="inline-block mx-1" style="margin: 0px 2px;">
+<img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=flat&amp;logo=JavaScript&amp;logoColor=black" class="inline-block mx-1" style="margin: 0px 2px;">
+<br>
+<img alt="EJS" src="https://img.shields.io/badge/EJS-B4CA65.svg?style=flat&amp;logo=EJS&amp;logoColor=black" class="inline-block mx-1" style="margin: 0px 2px;">
+<img alt="sharp" src="https://img.shields.io/badge/sharp-99CC00.svg?style=flat&amp;logo=sharp&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
+<img alt="Nodemon" src="https://img.shields.io/badge/Nodemon-76D04B.svg?style=flat&amp;logo=Nodemon&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
+<img alt="GNU%20Bash" src="https://img.shields.io/badge/GNU%20Bash-4EAA25.svg?style=flat&amp;logo=GNU-Bash&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
+<img alt="XML" src="https://img.shields.io/badge/XML-005FAD.svg?style=flat&amp;logo=XML&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
+<img alt="GitHub%20Actions" src="https://img.shields.io/badge/GitHub%20Actions-2088FF.svg?style=flat&amp;logo=GitHub-Actions&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
+<img alt="Axios" src="https://img.shields.io/badge/Axios-5A29E4.svg?style=flat&amp;logo=Axios&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
+<img alt="Jest" src="https://img.shields.io/badge/Jest-C21325.svg?style=flat&amp;logo=Jest&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
+</div>
+
 
 A simple and efficient URL shortener built with Node.js and Express.
 
